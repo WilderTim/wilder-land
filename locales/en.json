@@ -103,5 +103,8 @@
     "addresses": "Adressen",
     "activate": "Account activeren",
     "pending_approval": "Je account wacht op goedkeuring. Je ontvangt bericht zodra je prijzen kunt zien."
+  },
+  "hero": {
+    "slides": "Slides"
   }
 }

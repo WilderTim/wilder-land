@@ -38,6 +38,8 @@ One product is live: **Holy Smokey Part II – 75CL** (`copy-of-onkruidenthee-ko
 2. Pick the branch and leave all settings as they are. `vercel.json` already sets the build command (`npm run build:demo`) and output directory (`dist`).
 3. Click **Deploy**. Every push after that creates a new preview URL automatically.
 
+**Hero slideshow images (demo):** `assets/wl-hero-1.jpg` (paardenbloem), `wl-hero-2.jpg` (vlierbes), `wl-hero-3.jpg` (duizendblad) and `wl-hero-4.jpg` (kamille). Slides 2–4 are low-res stand-ins right now. Replace them with the originals (landscape, at least 2400px wide) by uploading files with the same names to `assets/` on GitHub, and Vercel redeploys automatically. On Shopify you set them per slide in the theme editor (Hero → Dia).
+
 The other three product cards and all editorial images are placeholders cropped from the Figma export. On Shopify you replace them in the theme editor.
 
 ---

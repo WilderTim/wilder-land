@@ -199,6 +199,76 @@
   };
   window.WLCart = Cart;
 
+  /* ------------------------------------------------------ hero slideshow */
+  const initHero = (root) => {
+    const slides = [...root.querySelectorAll('[data-slide]')];
+    const dots = [...root.querySelectorAll('[data-dot]')];
+    if (slides.length < 2 || root.dataset.heroReady) return;
+    root.dataset.heroReady = 'true';
+    const interval = Number(root.dataset.interval) || 6000;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let index = 0;
+    let timer = null;
+    let remaining = interval;
+    let startedAt = 0;
+
+    const show = (next) => {
+      index = (next + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        s.classList.toggle('is-active', i === index);
+        s.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+        if (i === index) s.querySelector('img[loading="lazy"]')?.setAttribute('loading', 'eager');
+      });
+      dots.forEach((d, i) => {
+        d.classList.remove('is-active');
+        d.classList.toggle('is-done', i < index);
+        d.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      });
+      // restart the progress animation on the active dot
+      void dots[index]?.offsetWidth;
+      dots[index]?.classList.add('is-active');
+      // preload the following slide so the crossfade never shows an empty frame
+      slides[(index + 1) % slides.length].querySelector('img[loading="lazy"]')?.setAttribute('loading', 'eager');
+      schedule(interval);
+    };
+    const schedule = (ms) => {
+      clearTimeout(timer);
+      if (reduced || root.classList.contains('is-paused')) { remaining = ms; return; }
+      remaining = ms;
+      startedAt = Date.now();
+      timer = setTimeout(() => show(index + 1), ms);
+    };
+    const pause = () => {
+      if (root.classList.contains('is-paused')) return;
+      root.classList.add('is-paused');
+      clearTimeout(timer);
+      remaining = Math.max(0, remaining - (Date.now() - startedAt));
+    };
+    const resume = () => {
+      if (!root.classList.contains('is-paused')) return;
+      root.classList.remove('is-paused');
+      schedule(remaining);
+    };
+
+    dots.forEach((d) => d.addEventListener('click', () => { root.classList.remove('is-paused'); show(Number(d.dataset.dot)); }));
+    root.addEventListener('focusin', pause);
+    root.addEventListener('focusout', resume);
+    document.addEventListener('visibilitychange', () => (document.hidden ? pause() : resume()));
+
+    // swipe on touch screens
+    let touchX = null;
+    root.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+    root.addEventListener('touchend', (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
+      touchX = null;
+    });
+
+    if (reduced) dots[0]?.classList.add('is-active');
+    else schedule(interval);
+  };
+
   /* ------------------------------------------- product page: variant picking */
   class ProductForm {
     constructor(root) {
@@ -265,6 +335,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     initHeader();
+    document.querySelectorAll('[data-hero]').forEach(initHero);
     Cart.init();
     document.querySelectorAll('[data-product-form]').forEach((el) => new ProductForm(el));
     initCartPage();
@@ -274,5 +345,6 @@
   document.addEventListener('shopify:section:load', (e) => {
     e.target.querySelectorAll('[data-product-form]').forEach((el) => new ProductForm(el));
     if (e.target.querySelector('[data-header]')) initHeader();
+    e.target.querySelectorAll('[data-hero]').forEach(initHero);
   });
 })();

@@ -1,18 +1,64 @@
+{%- comment -%}
+  Hero slideshow. Each "Dia" block = image + caption (plant name, where/when picked).
+  The big wordmark stays put while the images crossfade underneath.
+  Autoplays every N seconds, pauses on hover/focus and when the tab is hidden, and does
+  not autoplay for visitors who prefer reduced motion.
+{%- endcomment -%}
 {%- liquid
-  assign focal = '50% 50%'
-  if section.settings.image.presentation.focal_point
-    assign focal = section.settings.image.presentation.focal_point
-  endif
+  assign slides = section.blocks
+  assign slide_count = slides.size
 -%}
-<section class="hero" style="--focal: {{ focal }};">
-  <div class="hero__media">
-    {% render 'wl-image', image: section.settings.image, fallback: 'wl-hero.jpg', sizes: '100vw', loading: 'eager', alt: section.settings.caption_title %}
-  </div>
+<section
+  class="hero{% if slide_count > 1 %} hero--slideshow{% endif %}"
+  data-hero
+  data-interval="{{ section.settings.interval | times: 1000 }}"
+  style="--hero-interval: {{ section.settings.interval }}s;"
+  {% if slide_count > 1 %}aria-roledescription="carousel" aria-label="{{ section.settings.wordmark | escape }}"{% endif %}
+>
+  {%- for block in slides -%}
+    {%- liquid
+      assign fallback = 'wl-hero-' | append: forloop.index | append: '.jpg'
+      if forloop.index > 4
+        assign fallback = 'wl-hero-1.jpg'
+      endif
+      assign focal = '50% 50%'
+      if block.settings.image.presentation.focal_point
+        assign focal = block.settings.image.presentation.focal_point
+      endif
+      if forloop.first
+        assign slide_loading = 'eager'
+      else
+        assign slide_loading = 'lazy'
+      endif
+    -%}
+    <div
+      class="hero__slide{% if forloop.first %} is-active{% endif %}"
+      data-slide
+      style="--focal: {{ focal }};"
+      {% if slide_count > 1 %}role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} / {{ slide_count }}"{% endif %}
+      {% unless forloop.first %}aria-hidden="true"{% endunless %}
+      {{ block.shopify_attributes }}
+    >
+      <div class="hero__media">
+        {% render 'wl-image', image: block.settings.image, fallback: fallback, sizes: '100vw', loading: slide_loading, alt: block.settings.caption_title %}
+      </div>
+      {%- if block.settings.caption_title != blank or block.settings.caption_text != blank -%}
+        <div class="hero__caption-wrap container">
+          <div class="hero__caption">
+            <p class="hero__caption-title">{{ block.settings.caption_title }}</p>
+            <div>{{ block.settings.caption_text | newline_to_br }}</div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endfor -%}
+
   <div class="hero__inner container">
-    {%- if section.settings.caption_title != blank or section.settings.caption_text != blank -%}
-      <div class="hero__caption">
-        <p class="hero__caption-title">{{ section.settings.caption_title }}</p>
-        <div>{{ section.settings.caption_text | newline_to_br }}</div>
+    {%- if slide_count > 1 -%}
+      <div class="hero__dots" role="tablist" aria-label="{{ 'hero.slides' | t }}">
+        {%- for block in slides -%}
+          <button type="button" class="hero__dot{% if forloop.first %} is-active{% endif %}" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ block.settings.caption_title | default: forloop.index }}" data-dot="{{ forloop.index0 }}"><span></span></button>
+        {%- endfor -%}
       </div>
     {%- endif -%}
     {%- if section.settings.wordmark != blank -%}
@@ -27,11 +73,31 @@
   "name": "Hero",
   "tag": "div",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Afbeelding", "info": "Stel het focuspunt in via de afbeelding. Minimaal 2400px breed." },
     { "type": "text", "id": "wordmark", "label": "Grote titel", "default": "Wilder Land" },
-    { "type": "text", "id": "caption_title", "label": "Bijschrift titel", "default": "Paardenbloem" },
-    { "type": "textarea", "id": "caption_text", "label": "Bijschrift tekst", "default": "Geplukt zomer '28.\nVinkenhorst, Herwen" }
+    { "type": "range", "id": "interval", "label": "Tijd per dia", "min": 3, "max": 12, "step": 1, "unit": "s", "default": 6 }
   ],
-  "presets": [{ "name": "Hero" }]
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Dia",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Afbeelding", "info": "Minimaal 2400px breed. Stel het focuspunt in via de afbeelding." },
+        { "type": "text", "id": "caption_title", "label": "Plant", "default": "Paardenbloem" },
+        { "type": "textarea", "id": "caption_text", "label": "Bijschrift", "default": "Geplukt zomer '28.\nVinkenhorst, Herwen" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        { "type": "slide", "settings": { "caption_title": "Paardenbloem" } },
+        { "type": "slide", "settings": { "caption_title": "Vlierbes" } },
+        { "type": "slide", "settings": { "caption_title": "Duizendblad" } },
+        { "type": "slide", "settings": { "caption_title": "Kamille" } }
+      ]
+    }
+  ]
 }
 {% endschema %}

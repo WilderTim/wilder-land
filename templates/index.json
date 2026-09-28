@@ -2,10 +2,45 @@
   "sections": {
     "hero": {
       "type": "hero",
+      "blocks": {
+        "s1": {
+          "type": "slide",
+          "settings": {
+            "caption_title": "Paardenbloem",
+            "caption_text": "Geplukt zomer '28.\nVinkenhorst, Herwen"
+          }
+        },
+        "s2": {
+          "type": "slide",
+          "settings": {
+            "caption_title": "Vlierbes",
+            "caption_text": "Geplukt zomer '28.\nVinkenhorst, Herwen"
+          }
+        },
+        "s3": {
+          "type": "slide",
+          "settings": {
+            "caption_title": "Duizendblad",
+            "caption_text": "Geplukt zomer '28.\nVinkenhorst, Herwen"
+          }
+        },
+        "s4": {
+          "type": "slide",
+          "settings": {
+            "caption_title": "Kamille",
+            "caption_text": "Geplukt zomer '28.\nVinkenhorst, Herwen"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
       "settings": {
         "wordmark": "Wilder Land",
-        "caption_title": "Paardenbloem",
-        "caption_text": "Geplukt zomer '28.\nVinkenhorst, Herwen"
+        "interval": 6
       }
     },
     "products": {
