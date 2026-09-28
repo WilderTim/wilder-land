@@ -1,48 +1,53 @@
 {%- comment -%}
-  Product row ("SHOP/COLLECTIONS").
+  Product row.
   Source A: pick a collection → shows its first N products (collections can be automated
             on product tags in Shopify admin, e.g. "tag is bestseller").
   Source B: no collection → one card per block; each block picks a product.
-            Blocks without a product show the Figma demo image (not clickable).
+            Blocks without a product show the demo image.
 {%- endcomment -%}
 {%- liquid
   assign collection_source = section.settings.collection
   assign cols = section.settings.columns
-  assign sizes = '(min-width: 990px) calc(100vw / ' | append: cols | append: '), 50vw'
+  assign sizes = '(min-width: 990px) calc(' | append: settings.page_max_width | append: 'px / ' | append: cols | append: '), 50vw'
   assign view_all = section.settings.view_all_url | default: collection_source.url | default: routes.all_products_collection_url
 -%}
-<section class="product-row page-width">
-  <div class="product-row__bar">
-    <h2 class="label">{{ section.settings.heading }}</h2>
-    {%- if section.settings.view_all_label != blank -%}
-      <a class="link-bracket" href="{{ view_all }}">{{ section.settings.view_all_label }}</a>
-    {%- endif -%}
-  </div>
-  <div class="product-row__grid" style="--cols: {{ cols }};">
-    {%- if collection_source != blank and collection_source.products_count > 0 -%}
-      {%- for product in collection_source.products limit: section.settings.limit -%}
-        {% render 'product-card', product: product, show_price: section.settings.show_price, sizes: sizes %}
-      {%- endfor -%}
-    {%- else -%}
-      {%- for block in section.blocks -%}
-        {%- liquid
-          assign fallback = 'wl-product-' | append: forloop.index | append: '.jpg'
-          if forloop.index > 4
-            assign fallback = 'wl-product-1.jpg'
-          endif
-        -%}
-        {% render 'product-card',
-          product: block.settings.product,
-          image: block.settings.image,
-          eyebrow: block.settings.eyebrow,
-          title: block.settings.title,
-          fallback: fallback,
-          show_price: section.settings.show_price,
-          sizes: sizes,
-          block: block
-        %}
-      {%- endfor -%}
-    {%- endif -%}
+<section class="section{% if section.settings.flush_top %} section--flush{% endif %}">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="section-head__eyebrow label">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="h-display">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.view_all_label != blank -%}
+        <a class="link-bracket" href="{{ view_all }}">{{ section.settings.view_all_label }}</a>
+      {%- endif -%}
+    </div>
+    <div class="product-grid" style="--cols: {{ cols }};">
+      {%- if collection_source != blank and collection_source.products_count > 0 -%}
+        {%- for product in collection_source.products limit: section.settings.limit -%}
+          {% render 'product-card', product: product, show_price: section.settings.show_price, sizes: sizes %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign fallback = 'wl-product-' | append: forloop.index | append: '.jpg'
+            if forloop.index > 4
+              assign fallback = 'wl-product-1.jpg'
+            endif
+          -%}
+          {% render 'product-card',
+            product: block.settings.product,
+            image: block.settings.image,
+            eyebrow: block.settings.eyebrow,
+            title: block.settings.title,
+            fallback: fallback,
+            show_price: section.settings.show_price,
+            sizes: sizes,
+            block: block
+          %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
   </div>
 </section>
 
@@ -51,13 +56,15 @@
   "name": "Productrij",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Titel", "default": "Shop/Collections" },
-    { "type": "text", "id": "view_all_label", "label": "Link-tekst", "default": "View all" },
+    { "type": "text", "id": "eyebrow", "label": "Label boven titel", "default": "Shop / Collections" },
+    { "type": "text", "id": "heading", "label": "Titel", "default": "Botanische dranken" },
+    { "type": "text", "id": "view_all_label", "label": "Link-tekst", "default": "Bekijk alles" },
     { "type": "url", "id": "view_all_url", "label": "Link" },
     { "type": "collection", "id": "collection", "label": "Collectie", "info": "Laat leeg om producten per blok te kiezen." },
     { "type": "range", "id": "limit", "label": "Aantal producten (collectie)", "min": 2, "max": 12, "step": 1, "default": 4 },
     { "type": "range", "id": "columns", "label": "Kolommen (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 },
-    { "type": "checkbox", "id": "show_price", "label": "Toon prijs", "default": false }
+    { "type": "checkbox", "id": "show_price", "label": "Toon prijs", "default": true },
+    { "type": "checkbox", "id": "flush_top", "label": "Geen ruimte boven", "default": false }
   ],
   "blocks": [
     {

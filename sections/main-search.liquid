@@ -1,4 +1,4 @@
-<section class="page-width">
+<section class="container page-end">
   <div class="listing-head"><h1 class="h-display">{{ 'search.title' | t }}</h1></div>
   <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
     <label class="visually-hidden" for="SearchInput">{{ 'search.title' | t }}</label>
@@ -9,7 +9,7 @@
   {%- if search.performed -%}
     {%- paginate search.results by 24 -%}
       {%- if search.results_count > 0 -%}
-        <div class="product-row__grid" style="--cols: 4;">
+        <div class="product-grid" style="--cols: 4;">
           {%- for item in search.results -%}
             {%- if item.object_type == 'product' -%}
               {% render 'product-card', product: item, show_price: true, sizes: '(min-width: 990px) 25vw, 50vw' %}

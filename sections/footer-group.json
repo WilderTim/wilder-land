@@ -14,7 +14,7 @@
         "contact_heading": "Contact",
         "legal_menu": "footer-bottom",
         "copyright": "Wilderland 2020-[year]. Alle rechten voorbehouden.",
-        "show_newsletter": false
+        "show_newsletter": true
       }
     }
   },

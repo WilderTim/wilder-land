@@ -8,7 +8,7 @@
   <div class="hero__media">
     {% render 'wl-image', image: section.settings.image, fallback: 'wl-hero.jpg', sizes: '100vw', loading: 'eager', alt: section.settings.caption_title %}
   </div>
-  <div class="hero__inner page-width">
+  <div class="hero__inner container">
     {%- if section.settings.caption_title != blank or section.settings.caption_text != blank -%}
       <div class="hero__caption">
         <p class="hero__caption-title">{{ section.settings.caption_title }}</p>
@@ -26,7 +26,6 @@
 {
   "name": "Hero",
   "tag": "div",
-  "class": "section-hero",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Afbeelding", "info": "Stel het focuspunt in via de afbeelding. Minimaal 2400px breed." },
     { "type": "text", "id": "wordmark", "label": "Grote titel", "default": "Wilder Land" },

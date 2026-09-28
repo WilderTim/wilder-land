@@ -1,13 +1,13 @@
 {%- paginate blog.articles by 12 -%}
-  <section class="page-width">
-    <div class="listing-head">
+  <section class="container page-end">
+    <div class="listing-head listing-head--center">
       <h1 class="h-display">{{ blog.title }}</h1>
     </div>
     {%- if blog.all_tags.size > 0 and section.settings.show_tags -%}
-      <nav class="filters" aria-label="{{ 'blogs.tags' | t }}">
-        <a class="chip" href="{{ blog.url }}"{% unless current_tags %} aria-current="true"{% endunless %}>{{ 'collections.all' | t }}</a>
+      <nav class="filters" style="justify-content:center" aria-label="{{ 'blogs.tags' | t }}">
+        <a class="chip chip--outline" href="{{ blog.url }}"{% unless current_tags %} aria-current="true"{% endunless %}>{{ 'collections.all' | t }}</a>
         {%- for tag in blog.all_tags -%}
-          <a class="chip" href="{{ blog.url }}/tagged/{{ tag | handle }}"{% if current_tags contains tag %} aria-current="true"{% endif %}>{{ tag }}</a>
+          <a class="chip chip--outline" href="{{ blog.url }}/tagged/{{ tag | handle }}"{% if current_tags contains tag %} aria-current="true"{% endif %}>{{ tag }}</a>
         {%- endfor -%}
       </nav>
     {%- endif -%}

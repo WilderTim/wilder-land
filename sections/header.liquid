@@ -4,39 +4,46 @@
     assign overlay = true
   endif
   assign menu = section.settings.menu
+  assign logo = section.settings.logo_text | default: shop.name
 -%}
-<header class="site-header{% if overlay %} site-header--overlay{% endif %}">
-  <div class="site-header__inner">
+<header class="site-header{% if overlay %} site-header--overlay{% endif %}" data-header>
+  <div class="site-header__inner container">
+    <a class="site-header__logo" href="{{ routes.root_url }}">{{ logo }}</a>
+
     <nav class="site-nav" aria-label="{{ 'header.menu' | t }}">
-      {%- unless overlay -%}
-        <a class="site-header__logo" href="{{ routes.root_url }}">{{ section.settings.logo_text | default: shop.name }}</a>
-      {%- endunless -%}
       {%- for link in menu.links -%}
         <a class="chip" href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
-      {%- else -%}
-        {%- comment -%} Demo links until a menu is chosen {%- endcomment -%}
-        <a class="chip" href="{{ routes.all_products_collection_url }}">Shop</a>
-        <a class="chip" href="{{ routes.collections_url }}">Cadeaus</a>
-        <a class="chip" href="#">Over</a>
-        <a class="chip" href="#">Verkooppunten</a>
-        <a class="chip" href="#">Zakelijk</a>
       {%- endfor -%}
     </nav>
+
     <div class="site-header__tools">
       {%- if section.settings.show_search -%}
-        <a class="chip" href="{{ routes.search_url }}">{{ 'header.search' | t }}</a>
+        <a class="chip chip--hide-sm" href="{{ routes.search_url }}">{{ 'header.search' | t }}</a>
       {%- endif -%}
       {%- if shop.customer_accounts_enabled and section.settings.show_account -%}
-        <a class="chip" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}">
+        <a class="chip chip--hide-sm" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}">
           {%- if customer -%}{{ 'header.account' | t }}{%- else -%}{{ 'header.login' | t }}{%- endif -%}
         </a>
       {%- endif -%}
-      <a class="chip" href="{{ routes.cart_url }}">
-        {{- 'header.cart' | t }}<span class="cart-count" data-count="{{ cart.item_count }}"> (<span data-cart-count>{{ cart.item_count }}</span>)</span>
+      <a class="chip" href="{{ routes.cart_url }}" data-cart-open aria-haspopup="dialog">
+        {{- 'header.cart' | t -}}
+        <span class="cart-count" data-count="{{ cart.item_count }}" data-cart-count>{{ cart.item_count }}</span>
       </a>
+      <button class="chip menu-toggle" type="button" aria-expanded="false" aria-controls="MobileNav" data-menu-toggle>
+        <span data-menu-label-open>{{ 'header.menu_open' | t }}</span>
+      </button>
     </div>
   </div>
 </header>
+
+<nav class="mobile-nav" id="MobileNav" aria-label="{{ 'header.menu' | t }}" data-mobile-nav>
+  {%- for link in menu.links -%}
+    <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+  {%- endfor -%}
+  {%- if shop.customer_accounts_enabled and section.settings.show_account -%}
+    <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}">{%- if customer -%}{{ 'header.account' | t }}{%- else -%}{{ 'header.login' | t }}{%- endif -%}</a>
+  {%- endif -%}
+</nav>
 
 {% schema %}
 {
@@ -44,8 +51,8 @@
   "class": "section-header",
   "settings": [
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Beheer de links in Online Store > Navigatie." },
-    { "type": "text", "id": "logo_text", "label": "Logo-tekst op overige pagina's", "default": "Wilder Land" },
-    { "type": "checkbox", "id": "overlay_on_home", "label": "Menu over de hero op de homepage", "default": true },
+    { "type": "text", "id": "logo_text", "label": "Logo-tekst", "default": "Wilder Land" },
+    { "type": "checkbox", "id": "overlay_on_home", "label": "Transparant over de hero op de homepage", "default": true },
     { "type": "checkbox", "id": "show_search", "label": "Toon zoeken", "default": false },
     { "type": "checkbox", "id": "show_account", "label": "Toon inloggen / account", "default": false, "info": "Zet aan voor de zakelijke winkel." }
   ]

@@ -1,4 +1,4 @@
-<section class="cart page-width">
+<section class="container page-end"><div class="cart" style="margin-inline:auto">
   <div class="listing-head"><h1 class="h-display">{{ 'cart.title' | t }}</h1></div>
 
   {%- if cart.item_count > 0 -%}
@@ -62,7 +62,7 @@
       <p style="margin-top:20px"><a class="link-bracket" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a></p>
     </div>
   {%- endif -%}
-</section>
+</div></section>
 
 {% schema %}
 {

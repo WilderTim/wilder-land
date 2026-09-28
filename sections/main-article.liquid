@@ -1,10 +1,10 @@
-<article class="article">
+<article class="container"><div class="article page-end">
   <header class="article__head">
     <p class="label">{{ blog.title }} · {{ article.published_at | date: format: 'date' }}</p>
     <h1 class="h-display">{{ article.title }}</h1>
     {%- if article.tags.size > 0 -%}
       <div class="article__tags">
-        {%- for tag in article.tags -%}<a class="chip" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{%- endfor -%}
+        {%- for tag in article.tags -%}<a class="chip chip--outline" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{%- endfor -%}
       </div>
     {%- endif -%}
   </header>
@@ -13,7 +13,7 @@
   {%- endif -%}
   <div class="rte">{{ article.content }}</div>
   <p class="text-center" style="margin-top:60px"><a class="link-bracket" href="{{ blog.url }}">{{ 'blogs.back' | t }}</a></p>
-</article>
+</div></article>
 
 <script type="application/ld+json">
   {

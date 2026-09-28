@@ -10,7 +10,7 @@
       "color_accent": "#04A151",
       "color_dark": "#120203",
       "color_muted": "#6B6B6B",
-      "page_max_width": 1800
+      "page_max_width": 1440
     },
     "Zakelijk": {
       "store_mode": "b2b",
@@ -21,7 +21,7 @@
       "color_accent": "#04A151",
       "color_dark": "#120203",
       "color_muted": "#6B6B6B",
-      "page_max_width": 1800
+      "page_max_width": 1440
     }
   }
 }

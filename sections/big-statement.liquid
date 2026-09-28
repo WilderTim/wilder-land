@@ -1,5 +1,5 @@
 <section class="big-statement" style="{% if section.settings.background != blank %}background: {{ section.settings.background }};{% endif %}">
-  <div class="big-statement__inner page-width">
+  <div class="big-statement__inner">
     <div class="big-statement__media">
       {% render 'wl-image', image: section.settings.image, fallback: 'wl-bubbles.jpg', sizes: '(min-width: 750px) 66vw, 80vw' %}
     </div>

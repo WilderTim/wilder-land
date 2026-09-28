@@ -1,5 +1,5 @@
-<section class="trio-section page-width">
-  <div class="trio">
+<section class="section{% if section.settings.flush_top %} section--flush{% endif %}">
+  <div class="container trio">
     {%- for block in section.blocks -%}
       {%- liquid
         assign fallback = 'wl-trio-' | append: forloop.index | append: '.jpg'
@@ -9,12 +9,12 @@
         assign item_url = block.settings.link | default: block.settings.product.url
       -%}
       <a class="trio__item" href="{{ item_url | default: '#' }}" {{ block.shopify_attributes }}>
-        <div class="media media--contain">
+        <div class="media media--contain media--zoom">
           {% render 'wl-image', image: block.settings.image, fallback: fallback, sizes: '(min-width: 750px) 33vw, 100vw', alt: block.settings.title %}
         </div>
-        <p class="trio__caption mono">
-          {%- if block.settings.eyebrow != blank -%}{{ block.settings.eyebrow }}<br>{%- endif -%}
-          {{ block.settings.title }}
+        <p class="trio__caption label">
+          <span>{{ block.settings.eyebrow }}</span>
+          <span>{{ block.settings.title }}</span>
         </p>
       </a>
     {%- endfor -%}
@@ -25,6 +25,7 @@
 {
   "name": "Drie afbeeldingen",
   "tag": "div",
+  "settings": [{ "type": "checkbox", "id": "flush_top", "label": "Geen ruimte boven", "default": false }],
   "blocks": [
     {
       "type": "item",

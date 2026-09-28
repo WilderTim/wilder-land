@@ -76,6 +76,8 @@ Use Shopify's **GitHub integration**. Your current B2B theme (`Wilderland-B2B/ma
 | Discount codes, shipping, taxes, iDEAL/Apple Pay | Discounts / Settings |
 | B2B customer access | Klanten → tag `zakelijk` |
 
+Storefront UX built in: sticky header (transparent over the hero, solid on scroll), mobile menu, slide-in cart with quantity controls, quick "add to cart" on single-variant product cards, product accordions (*Uitklapbare tekst* blocks), breadcrumbs, and a newsletter sign-up in the footer. Layout sits in a centred container (Theme settings → Layout → *Maximale paginabreedte*, default 1440px), so it stays compact on big screens.
+
 Every homepage section from Figma is a reusable section with presets: Hero, Productrij, Statement, Twee afbeeldingen, Ingrediënten, Afbeelding met tekst, Lopende tekst, Drie afbeeldingen, Collabs, Grote slogan, Apps. The team can add them to any page.
 
 ---

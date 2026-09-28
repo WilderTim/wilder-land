@@ -9,7 +9,13 @@
   endif
   assign eyebrow = product.metafields.custom.subtitle.value | default: product.type
 -%}
-<section class="product page-width">
+<div class="container page-end">
+<nav class="breadcrumbs label" aria-label="Breadcrumb">
+  <a href="{{ routes.root_url }}">Home</a><span aria-hidden="true">/</span>
+  {%- if collection -%}<a href="{{ collection.url }}">{{ collection.title }}</a>{%- else -%}<a href="{{ routes.all_products_collection_url }}">Shop</a>{%- endif -%}
+  <span aria-hidden="true">/</span><span aria-current="page">{{ product.title }}</span>
+</nav>
+<section class="product">
   <div class="product__gallery">
     {%- for media in product.media -%}
       <div class="media" data-media-id="{{ media.id }}">
@@ -34,6 +40,7 @@
     {%- if eyebrow != blank -%}<p class="product__eyebrow label">{{ eyebrow }}</p>{%- endif -%}
     <h1 class="product__title h-display">{{ product.title }}</h1>
     <div class="product__price">{% render 'price', product: product, variant: current_variant, style: 'product' %}</div>
+    <p class="product__live label" data-live-badge hidden>● {{ 'products.live_price' | t }}</p>
 
     {%- if locked -%}
       <div class="gate">
@@ -91,12 +98,22 @@
 
     <div class="product__description rte">{{ product.description }}</div>
 
-    {%- if product.metafields.custom.ingredients != blank -%}
-      <div class="product__meta">
-        <p class="label">{{ 'products.ingredients' | t }}</p>
-        <div class="rte">{{ product.metafields.custom.ingredients | metafield_tag }}</div>
-      </div>
-    {%- endif -%}
+    <div class="accordion">
+      {%- if product.metafields.custom.ingredients != blank -%}
+        <details>
+          <summary class="label">{{ 'products.ingredients' | t }}</summary>
+          <div class="rte">{{ product.metafields.custom.ingredients | metafield_tag }}</div>
+        </details>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'collapsible' -%}
+          <details {{ block.shopify_attributes }}{% if block.settings.open %} open{% endif %}>
+            <summary class="label">{{ block.settings.heading }}</summary>
+            <div class="rte">{{ block.settings.content }}{{ block.settings.page.content }}</div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
 
     {%- comment -%} App blocks (e.g. reviews, subscriptions) added in the theme editor {%- endcomment -%}
     {%- for block in section.blocks -%}
@@ -124,6 +141,7 @@
     </script>
   </div>
 </section>
+</div>
 
 {%- comment -%} Structured data for Google (price, availability, brand) {%- endcomment -%}
 <script type="application/ld+json">
@@ -153,7 +171,19 @@
 {
   "name": "Product",
   "tag": "div",
-  "blocks": [{ "type": "@app" }],
+  "blocks": [
+    { "type": "@app" },
+    {
+      "type": "collapsible",
+      "name": "Uitklapbare tekst",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Titel", "default": "Serveertip" },
+        { "type": "richtext", "id": "content", "label": "Tekst" },
+        { "type": "page", "id": "page", "label": "Of: inhoud van pagina" },
+        { "type": "checkbox", "id": "open", "label": "Standaard open", "default": false }
+      ]
+    }
+  ],
   "settings": [
     { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Toon 'Direct kopen' knoppen (iDEAL, Apple Pay …)", "default": true }
   ]

@@ -1,6 +1,6 @@
-<section class="page-width">
+<section class="container page-end">
   <div class="listing-head"><h1 class="h-display">{{ section.settings.heading }}</h1></div>
-  <div class="product-row__grid" style="--cols: 3;">
+  <div class="product-grid" style="--cols: 3;">
     {%- for collection in collections -%}
       {%- unless collection.handle == 'frontpage' -%}
         <a class="product-card" href="{{ collection.url }}">

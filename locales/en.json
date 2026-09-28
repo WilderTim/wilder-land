@@ -8,7 +8,8 @@
     "password_title": "Binnenkort open",
     "password_enter": "Toegang met wachtwoord",
     "password_label": "Password",
-    "password_submit": "Naar binnen"
+    "password_submit": "Naar binnen",
+    "close": "Close"
   },
   "accessibility": {
     "skip_to_content": "Skip to content"
@@ -18,7 +19,8 @@
     "cart": "Cart",
     "search": "Search",
     "account": "Account",
-    "login": "Log in"
+    "login": "Log in",
+    "menu_open": "Menu"
   },
   "products": {
     "add_to_cart": "Add to cart",
@@ -29,7 +31,9 @@
     "decrease": "Less",
     "tax_included": "Including VAT",
     "shipping": "shipping",
-    "ingredients": "Ingredients"
+    "ingredients": "Ingredients",
+    "quick_add": "+ Add to cart",
+    "live_price": "Live price from Shopify"
   },
   "b2b": {
     "login_for_prices": "Log in for prices",
@@ -57,12 +61,14 @@
     "checkout": "Checkout",
     "update": "Bijwerken",
     "empty": "Your cart is empty.",
-    "continue": "Continue shopping"
+    "continue": "Continue shopping",
+    "close": "Close"
   },
   "blogs": {
     "tags": "Onderwerpen",
     "empty": "Nog geen artikelen.",
-    "back": "Terug naar overzicht"
+    "back": "Terug naar overzicht",
+    "all": "All collabs"
   },
   "search": {
     "title": "Search",

@@ -1,1 +1,42 @@
-{ "sections": { "main": { "type": "main-product", "settings": { "show_dynamic_checkout": true } }, "marquee": { "type": "text-marquee", "settings": { "text": "Natural Pleasure", "speed": 45 } } }, "order": ["main", "marquee"] }
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "serve": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Serveertip",
+            "content": "<p>Serveer goed gekoeld, met veel ijs en een botanische garnish die past bij de smaak. Schenk royaal, neem de tijd en geniet.</p>",
+            "open": true
+          }
+        },
+        "shipping": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Verzending & retour",
+            "content": "<p>Verzendkosten en levertijd zie je bij het afrekenen. Vragen? Mail <a href=\"mailto:info@wilder-land.com\">info@wilder-land.com</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "serve",
+        "shipping"
+      ],
+      "settings": {
+        "show_dynamic_checkout": true
+      }
+    },
+    "marquee": {
+      "type": "text-marquee",
+      "settings": {
+        "text": "Natural Pleasure",
+        "speed": 45
+      }
+    }
+  },
+  "order": [
+    "main",
+    "marquee"
+  ]
+}

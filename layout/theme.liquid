@@ -51,10 +51,20 @@
 
     {% sections 'footer-group' %}
 
-    <div class="cart-toast" id="CartToast" role="status" aria-live="polite" hidden>
-      <span class="cart-toast__text mono" data-cart-toast-text></span>
-      <a class="cart-toast__link mono" href="{{ routes.cart_url }}">[{{ 'cart.view' | t }}]</a>
-    </div>
+    {%- comment -%} Slide-in cart. Filled by assets/theme.js from Shopify's /cart.js {%- endcomment -%}
+    <aside class="cart-drawer" id="CartDrawer" role="dialog" aria-modal="true" aria-labelledby="CartDrawerTitle" data-cart-drawer>
+      <div class="cart-drawer__head">
+        <h2 class="cart-drawer__title" id="CartDrawerTitle">{{ 'cart.title' | t }}</h2>
+        <button class="cart-drawer__close chip chip--outline" type="button" data-cart-close>{{ 'cart.close' | t }}</button>
+      </div>
+      <div class="cart-drawer__body" data-cart-lines></div>
+      <div class="cart-drawer__foot" data-cart-foot hidden>
+        <p class="cart-footer__subtotal"><span>{{ 'cart.subtotal' | t }}</span><span data-cart-subtotal></span></p>
+        <a class="btn btn--block" href="{{ routes.cart_url }}" data-cart-checkout>{{ 'cart.checkout' | t }}</a>
+        <p class="drawer-note">{{ 'cart.taxes_shipping' | t }}</p>
+      </div>
+    </aside>
+    <div class="drawer-backdrop" data-cart-close></div>
 
     <script>
       window.theme = {
@@ -64,9 +74,15 @@
           cartAdd: {{ routes.cart_add_url | json }},
           cartChange: {{ routes.cart_change_url | json }}
         },
+        moneyFormat: {{ shop.money_format | json }},
         strings: {
           added: {{ 'cart.added' | t | json }},
-          error: {{ 'cart.error' | t | json }}
+          error: {{ 'cart.error' | t | json }},
+          empty: {{ 'cart.empty' | t | json }},
+          continue: {{ 'cart.continue' | t | json }},
+          remove: {{ 'cart.remove' | t | json }},
+          quantity: {{ 'products.quantity' | t | json }},
+          close: {{ 'general.close' | t | json }}
         }
       };
     </script>

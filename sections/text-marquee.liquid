@@ -1,7 +1,7 @@
 <section class="text-marquee" style="{% if section.settings.color != blank %}color: {{ section.settings.color }};{% endif %}">
   <div class="marquee" aria-label="{{ section.settings.text | escape }}">
     <div class="marquee__track" style="--speed: {{ section.settings.speed }}s;" aria-hidden="true">
-      {%- for i in (1..16) -%}
+      {%- for i in (1..12) -%}
         <span class="text-marquee__item">{{ section.settings.text }}</span>
       {%- endfor -%}
     </div>

@@ -16,13 +16,13 @@
     --color-accent: {{ settings.color_accent }};
     --color-dark: {{ settings.color_dark }};
     --color-muted: {{ settings.color_muted }};
-    --color-line: {{ settings.color_text | color_modify: 'alpha', 0.14 }};
+    --color-line: {{ settings.color_text | color_modify: 'alpha', 0.1 }};
+    --color-line-strong: {{ settings.color_text | color_modify: 'alpha', 0.28 }};
 
     --font-serif: 'WL Serif', 'Times New Roman', serif;
     --font-mono: 'WL Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
     --font-sans: 'WL Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
     --page-max: {{ settings.page_max_width }}px;
-    --gutter: clamp(12px, 1.6vw, 18px);
   }
 {%- endstyle -%}

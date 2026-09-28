@@ -1,6 +1,7 @@
-<section class="feature page-width{% if section.settings.layout == 'image_right' %} feature--reverse{% endif %}">
+<section class="section">
+<div class="container feature{% if section.settings.layout == 'image_right' %} feature--reverse{% endif %}">
   <div class="feature__media media">
-    {% render 'wl-image', image: section.settings.image, fallback: 'wl-perfect-serve.jpg', sizes: '(min-width: 750px) 55vw, 100vw', alt: section.settings.heading %}
+    {% render 'wl-image', image: section.settings.image, fallback: 'wl-perfect-serve.jpg', sizes: '(min-width: 750px) 50vw, 100vw', alt: section.settings.heading %}
   </div>
   <div class="feature__content">
     {%- if section.settings.eyebrow != blank -%}
@@ -12,6 +13,7 @@
       <div class="feature__link"><a class="link-bracket" href="{{ section.settings.link | default: '#' }}">{{ section.settings.link_label }}</a></div>
     {%- endif -%}
   </div>
+</div>
 </section>
 
 {% schema %}
@@ -27,7 +29,7 @@
     { "type": "text", "id": "heading", "label": "Titel", "default": "The Perfect Serve" },
     {
       "type": "richtext", "id": "text", "label": "Tekst",
-      "default": "<p>Serveer Wilder Land goed koud, met veel ijs en een botanische garnish die past bij de smaak. Schenk royaal, neem de tijd en geniet. Het liefst buiten, aan een lange tafel, met goed eten en fijn gezelschap. Serveer Wilder Land goed koud, met veel ijs en een botanische garnish die past bij de smaak. Schenk royaal, neem de tijd en geniet. Het liefst buiten, aan een lange tafel, met goed eten en fijn gezelschap.</p>"
+      "default": "<p>Serveer Wilder Land goed koud, met veel ijs en een botanische garnish die past bij de smaak. Schenk royaal, neem de tijd en geniet.</p><p>Het liefst buiten, aan een lange tafel, met goed eten en fijn gezelschap.</p>"
     },
     { "type": "text", "id": "link_label", "label": "Link-tekst", "default": "Lees meer" },
     { "type": "url", "id": "link", "label": "Link" }

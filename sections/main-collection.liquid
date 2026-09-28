@@ -3,10 +3,13 @@
   "Tag" filter there and product tags become clickable filters here, no code needed.
 {%- endcomment -%}
 {%- paginate collection.products by section.settings.per_page -%}
-  <section class="page-width">
+  <section class="container page-end">
     <div class="listing-head">
-      <h1 class="h-display">{{ collection.title }}</h1>
-      {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
+      <div>
+        <p class="label label--muted">{{ 'collections.products_count' | t: count: collection.products_count }}</p>
+        <h1 class="h-display" style="margin-top:10px">{{ collection.title }}</h1>
+        {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
+      </div>
     </div>
 
     {%- if section.settings.show_filters -%}
@@ -14,11 +17,11 @@
         {%- if filter.type == 'list' -%}
           <nav class="filters" aria-label="{{ filter.label | escape }}">
             {%- if filter.active_values.size > 0 -%}
-              <a class="chip" href="{{ filter.url_to_remove }}">{{ 'collections.all' | t }}</a>
+              <a class="chip chip--outline" href="{{ filter.url_to_remove }}">{{ 'collections.all' | t }}</a>
             {%- endif -%}
             {%- for value in filter.values -%}
               {%- if value.count > 0 or value.active -%}
-                <a class="chip" href="{% if value.active %}{{ value.url_to_remove }}{% else %}{{ value.url_to_add }}{% endif %}"{% if value.active %} aria-current="true"{% endif %}>{{ value.label }}</a>
+                <a class="chip chip--outline" href="{% if value.active %}{{ value.url_to_remove }}{% else %}{{ value.url_to_add }}{% endif %}"{% if value.active %} aria-current="true"{% endif %}>{{ value.label }}</a>
               {%- endif -%}
             {%- endfor -%}
           </nav>
@@ -27,7 +30,7 @@
     {%- endif -%}
 
     {%- if collection.products.size > 0 -%}
-      <div class="product-row__grid" style="--cols: {{ section.settings.columns }};">
+      <div class="product-grid" style="--cols: {{ section.settings.columns }};">
         {%- for product in collection.products -%}
           {% render 'product-card', product: product, show_price: section.settings.show_price, sizes: '(min-width: 990px) 25vw, 50vw' %}
         {%- endfor -%}

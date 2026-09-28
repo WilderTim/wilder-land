@@ -2,9 +2,15 @@
   "Onze natuurlijke ingrediënten" — endless horizontal strip. Blocks are rendered twice
   so the CSS marquee can loop seamlessly; the copy is hidden from screen readers.
 {%- endcomment -%}
-<section class="ingredients">
+<section class="section ingredients">
   {%- if section.settings.heading != blank -%}
-    <h2 class="ingredients__heading h-display">{{ section.settings.heading }}</h2>
+    <div class="container section-head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="section-head__eyebrow label">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="h-display">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.link_label != blank -%}<a class="link-bracket" href="{{ section.settings.link | default: '#' }}">{{ section.settings.link_label }}</a>{%- endif -%}
+    </div>
   {%- endif -%}
   <div class="marquee">
     <div class="marquee__track" style="--speed: {{ section.settings.speed }}s;">
@@ -24,7 +30,7 @@
           -%}
           <div class="ingredient"{% if pass == 2 %} aria-hidden="true"{% else %} {{ block.shopify_attributes }}{% endif %}>
             {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" class="media"{% if pass == 2 %} tabindex="-1"{% endif %}>{%- else -%}<div class="media">{%- endif -%}
-              {% render 'wl-image', image: block.settings.image, fallback: demo, sizes: '400px', alt: block.settings.label %}
+              {% render 'wl-image', image: block.settings.image, fallback: demo, sizes: '300px', alt: block.settings.label %}
             {%- if block.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
             {%- if block.settings.label != blank -%}
               <span class="ingredient__label chip chip--dark">{{ block.settings.label }}</span>
@@ -41,7 +47,10 @@
   "name": "Ingrediënten",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "heading", "label": "Titel", "default": "Onze natuurlijke ingredienten" },
+    { "type": "text", "id": "eyebrow", "label": "Label boven titel", "default": "Uit de Nederlandse natuur" },
+    { "type": "text", "id": "heading", "label": "Titel", "default": "Onze natuurlijke ingrediënten" },
+    { "type": "text", "id": "link_label", "label": "Link-tekst", "default": "" },
+    { "type": "url", "id": "link", "label": "Link" },
     { "type": "range", "id": "speed", "label": "Snelheid (seconden per ronde)", "min": 20, "max": 160, "step": 5, "default": 70 }
   ],
   "blocks": [

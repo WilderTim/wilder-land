@@ -1,8 +1,11 @@
-<section class="statement{% if section.settings.compact %} statement--compact{% endif %} color-scheme-{{ section.settings.color_scheme }}">
-  <div class="statement__text">{{ section.settings.text }}</div>
-  {%- if section.settings.link_label != blank -%}
-    <div class="statement__link"><a class="link-bracket" href="{{ section.settings.link | default: '#' }}">{{ section.settings.link_label }}</a></div>
-  {%- endif -%}
+<section class="section statement{% if section.settings.color_scheme != 'light' %} statement--band color-scheme-{{ section.settings.color_scheme }}{% endif %}">
+  <div class="container">
+    {%- if section.settings.eyebrow != blank -%}<p class="label label--muted" style="margin-bottom:22px">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <div class="statement__text">{{ section.settings.text }}</div>
+    {%- if section.settings.link_label != blank -%}
+      <div class="statement__link"><a class="link-bracket" href="{{ section.settings.link | default: '#' }}">{{ section.settings.link_label }}</a></div>
+    {%- endif -%}
+  </div>
 </section>
 
 {% schema %}
@@ -10,15 +13,15 @@
   "name": "Statement",
   "tag": "div",
   "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Label", "default": "Natural Pleasure" },
     {
       "type": "richtext", "id": "text", "label": "Tekst",
       "default": "<p>Wilder Land maakt botanische dranken uit de Nederlandse natuur.</p><p>Natural Pleasure: wilde ingrediënten, verrassende smaken en puur genieten.</p>"
     },
     { "type": "text", "id": "link_label", "label": "Link-tekst", "default": "Lees meer" },
     { "type": "url", "id": "link", "label": "Link" },
-    { "type": "checkbox", "id": "compact", "label": "Minder ruimte", "default": false },
     { "type": "select", "id": "color_scheme", "label": "Kleur", "default": "light", "options": [
-      { "value": "light", "label": "Licht" }, { "value": "dark", "label": "Donker" }, { "value": "accent", "label": "Groen" }
+      { "value": "light", "label": "Licht" }, { "value": "sand", "label": "Zand" }, { "value": "dark", "label": "Donker" }, { "value": "accent", "label": "Groen" }
     ] }
   ],
   "presets": [{ "name": "Statement" }]

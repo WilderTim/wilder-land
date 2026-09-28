@@ -36,7 +36,7 @@
   {
     "name": "Layout",
     "settings": [
-      { "type": "range", "id": "page_max_width", "label": "Maximale paginabreedte", "min": 1100, "max": 2400, "step": 50, "unit": "px", "default": 1800 },
+      { "type": "range", "id": "page_max_width", "label": "Maximale paginabreedte", "min": 1100, "max": 1920, "step": 50, "unit": "px", "default": 1440 },
       { "type": "image_picker", "id": "favicon", "label": "Favicon" }
     ]
   }

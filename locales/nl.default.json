@@ -8,10 +8,20 @@
     "password_title": "Binnenkort open",
     "password_enter": "Toegang met wachtwoord",
     "password_label": "Wachtwoord",
-    "password_submit": "Naar binnen"
+    "password_submit": "Naar binnen",
+    "close": "Sluit"
   },
-  "accessibility": { "skip_to_content": "Naar de inhoud" },
-  "header": { "menu": "Hoofdmenu", "cart": "Winkelwagen", "search": "Zoeken", "account": "Account", "login": "Inloggen" },
+  "accessibility": {
+    "skip_to_content": "Naar de inhoud"
+  },
+  "header": {
+    "menu": "Hoofdmenu",
+    "cart": "Winkelwagen",
+    "search": "Zoeken",
+    "account": "Account",
+    "login": "Inloggen",
+    "menu_open": "Menu"
+  },
   "products": {
     "add_to_cart": "In winkelwagen",
     "sold_out": "Uitverkocht",
@@ -21,7 +31,9 @@
     "decrease": "Minder",
     "tax_included": "Inclusief btw",
     "shipping": "verzending",
-    "ingredients": "Ingrediënten"
+    "ingredients": "Ingrediënten",
+    "quick_add": "+ In winkelwagen",
+    "live_price": "Live prijs uit Shopify"
   },
   "b2b": {
     "login_for_prices": "Log in voor prijzen",
@@ -30,7 +42,11 @@
     "gate_text": "Prijzen en bestellen zijn beschikbaar voor goedgekeurde zakelijke klanten. Log in of vraag een account aan.",
     "apply": "Account aanvragen"
   },
-  "collections": { "all": "Alles", "empty": "Er zijn (nog) geen producten in deze collectie.", "products_count": "{{ count }} producten" },
+  "collections": {
+    "all": "Alles",
+    "empty": "Er zijn (nog) geen producten in deze collectie.",
+    "products_count": "{{ count }} producten"
+  },
   "cart": {
     "title": "Winkelwagen",
     "view": "Bekijk winkelwagen",
@@ -45,11 +61,26 @@
     "checkout": "Afrekenen",
     "update": "Bijwerken",
     "empty": "Je winkelwagen is leeg.",
-    "continue": "Verder winkelen"
+    "continue": "Verder winkelen",
+    "close": "Sluit"
   },
-  "blogs": { "tags": "Onderwerpen", "empty": "Nog geen artikelen.", "back": "Terug naar overzicht" },
-  "search": { "title": "Zoeken", "placeholder": "Waar ben je naar op zoek?", "submit": "Zoek", "no_results": "Geen resultaten voor “{{ terms }}”." },
-  "newsletter": { "email": "E-mailadres", "subscribe": "Aanmelden", "success": "Bedankt voor je aanmelding!" },
+  "blogs": {
+    "tags": "Onderwerpen",
+    "empty": "Nog geen artikelen.",
+    "back": "Terug naar overzicht",
+    "all": "Alle collabs"
+  },
+  "search": {
+    "title": "Zoeken",
+    "placeholder": "Waar ben je naar op zoek?",
+    "submit": "Zoek",
+    "no_results": "Geen resultaten voor “{{ terms }}”."
+  },
+  "newsletter": {
+    "email": "E-mailadres",
+    "subscribe": "Aanmelden",
+    "success": "Bedankt voor je aanmelding!"
+  },
   "customer": {
     "login": "Inloggen",
     "email": "E-mailadres",

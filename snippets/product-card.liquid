@@ -7,15 +7,15 @@
   - show_price: boolean
   - sizes: sizes attribute
 
-  Line 1 of the label comes from the product metafield custom.subtitle
-  (e.g. "Gerookte (on)kruidenthee"), falling back to the product type.
-  Product tags that start with "label:" become a badge, e.g. "label:Nieuw".
+  Line 1 comes from the product metafield custom.subtitle (e.g. "Gerookte (on)kruidenthee"),
+  falling back to the product type. Product tags that start with "label:" become a badge,
+  e.g. "label:Nieuw". Single-variant products get a quick "add to cart" button.
 {%- endcomment -%}
 {%- liquid
   assign card_image = image | default: product.featured_media
   assign line_1 = eyebrow | default: product.metafields.custom.subtitle.value | default: product.type
   assign line_2 = title | default: product.title
-  assign card_url = product.url | default: url | default: '#'
+  assign card_url = product.url | default: '#'
   assign badge = ''
   for tag in product.tags
     if tag contains 'label:'
@@ -26,21 +26,42 @@
   if product and product.available == false
     assign badge = 'products.sold_out' | t
   endif
+
+  assign quick_add = false
+  if product and product.available and product.variants.size == 1
+    capture b2b_state
+      render 'b2b-access'
+    endcapture
+    unless b2b_state contains 'locked'
+      assign quick_add = true
+    endunless
+  endif
 -%}
-<a class="product-card" href="{{ card_url }}"{% if block %} {{ block.shopify_attributes }}{% endif %}>
-  <div class="product-card__media media">
-    {% render 'wl-image', image: card_image, fallback: fallback, sizes: sizes, alt: line_2 %}
+<div class="product-card"{% if block %} {{ block.shopify_attributes }}{% endif %}>
+  <div class="product-card__media-wrap">
+    <a class="product-card__link" href="{{ card_url }}"{% unless product %} tabindex="-1" aria-disabled="true"{% endunless %}>
+      <div class="product-card__media media media--zoom">
+        {% render 'wl-image', image: card_image, fallback: fallback, sizes: sizes, alt: line_2 %}
+      </div>
+    </a>
+    {%- if badge != blank -%}
+      <span class="product-card__badge chip">{{ badge }}</span>
+    {%- endif -%}
+    {%- if quick_add -%}
+      <form class="quick-add" method="post" action="{{ routes.cart_add_url }}">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="btn">{{ 'products.quick_add' | t }}</button>
+      </form>
+    {%- endif -%}
   </div>
-  {%- if badge != blank -%}
-    <span class="product-card__badge chip">{{ badge }}</span>
-  {%- endif -%}
-  <div class="product-card__info">
-    <p class="product-card__title mono">
-      {%- if line_1 != blank -%}{{ line_1 }}<br>{%- endif -%}
-      {{ line_2 }}
-    </p>
+  <a class="product-card__link product-card__info" href="{{ card_url }}">
+    <div>
+      {%- if line_1 != blank -%}<p class="product-card__eyebrow mono">{{ line_1 }}</p>{%- endif -%}
+      <p class="product-card__title mono">{{ line_2 }}</p>
+    </div>
     {%- if show_price and product -%}
       <span class="product-card__price">{% render 'price', product: product, style: 'card' %}</span>
     {%- endif -%}
-  </div>
-</a>
+  </a>
+</div>

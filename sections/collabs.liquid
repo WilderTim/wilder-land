@@ -11,10 +11,15 @@
     assign use_blog = true
   endif
 -%}
-<section class="collabs page-width">
-  {%- if section.settings.heading != blank -%}
-    <h2 class="collabs__heading h-display">{{ section.settings.heading }}</h2>
-  {%- endif -%}
+<section class="section collabs">
+  <div class="container">
+  <div class="section-head">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-head__eyebrow label">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="h-display">{{ section.settings.heading }}</h2>
+    </div>
+    {%- if use_blog -%}<a class="link-bracket" href="{{ source_blog.url }}">{{ 'blogs.all' | t }}</a>{%- endif -%}
+  </div>
   <div class="collabs__grid">
     {%- if use_blog -%}
       {%- for article in source_blog.articles limit: 1 -%}
@@ -46,6 +51,7 @@
       </div>
     {%- endif -%}
   </div>
+  </div>
 </section>
 
 {% schema %}
@@ -53,6 +59,7 @@
   "name": "Collabs",
   "tag": "div",
   "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Label boven titel", "default": "Samen met makers" },
     { "type": "text", "id": "heading", "label": "Titel", "default": "Collabs" },
     { "type": "blog", "id": "blog", "label": "Blog (optioneel)", "info": "Kies bijv. de blog 'Collabs'. Artikel-tags worden als ingrediëntenlijst getoond." }
   ],
