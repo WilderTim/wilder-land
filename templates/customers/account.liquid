@@ -1,0 +1,30 @@
+{%- capture b2b_state -%}{%- render 'b2b-access' -%}{%- endcapture -%}
+<section class="page">
+  <h1 class="page__title h-display">{{ 'customer.account' | t }}</h1>
+  <p class="label text-center">{{ customer.name }} · {{ customer.email }}</p>
+  {%- if b2b_state contains 'locked' -%}<p class="gate" style="margin-top:30px">{{ 'customer.pending_approval' | t }}</p>{%- endif -%}
+  <h2 class="h-card" style="margin:50px 0 16px">{{ 'customer.orders' | t }}</h2>
+  {%- paginate customer.orders by 20 -%}
+    {%- if customer.orders.size > 0 -%}
+      <table class="cart-table">
+        <thead><tr><th class="label">{{ 'customer.order' | t }}</th><th class="label">{{ 'customer.date' | t }}</th><th class="label">{{ 'customer.status' | t }}</th><th class="label" style="text-align:right">{{ 'cart.total' | t }}</th></tr></thead>
+        <tbody>
+          {%- for order in customer.orders -%}
+            <tr>
+              <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+              <td>{{ order.created_at | date: '%d-%m-%Y' }}</td>
+              <td>{{ order.fulfillment_status_label }}</td>
+              <td style="text-align:right" class="mono">{{ order.total_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    {%- else -%}
+      <p>{{ 'customer.no_orders' | t }}</p>
+    {%- endif -%}
+  {%- endpaginate -%}
+  <p style="margin-top:40px;display:flex;gap:20px">
+    <a class="link-bracket" href="{{ routes.account_addresses_url }}">{{ 'customer.addresses' | t }}</a>
+    <a class="link-bracket" href="{{ routes.account_logout_url }}">{{ 'customer.logout' | t }}</a>
+  </p>
+</section>

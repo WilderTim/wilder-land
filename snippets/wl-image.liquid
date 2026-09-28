@@ -1,0 +1,45 @@
+{%- comment -%}
+  Responsive image with a built-in demo fallback.
+  - image:    an image object (image_picker setting, product.featured_media, article.image …)
+  - fallback: asset file name shown while no image has been chosen in the theme editor
+  - sizes:    sizes attribute (default 100vw)
+  - alt, loading ('lazy' | 'eager'), class
+  Usage: {% render 'wl-image', image: section.settings.image, fallback: 'wl-hero.jpg', sizes: '100vw', loading: 'eager' %}
+{%- endcomment -%}
+{%- liquid
+  assign img_sizes = sizes | default: '100vw'
+  assign img_loading = loading | default: 'lazy'
+  assign img_alt = alt | default: image.alt | default: ''
+  if img_loading == 'eager'
+    assign priority = 'high'
+  else
+    assign priority = 'auto'
+  endif
+-%}
+{%- if image != blank -%}
+  {{
+    image
+    | image_url: width: 2400
+    | image_tag:
+      widths: '360, 540, 720, 960, 1200, 1600, 2000, 2400',
+      sizes: img_sizes,
+      loading: img_loading,
+      fetchpriority: priority,
+      alt: img_alt,
+      class: class,
+      style: style
+  }}
+{%- elsif fallback != blank -%}
+  <img
+    src="{{ fallback | asset_url }}"
+    alt="{{ img_alt | escape }}"
+    width="1200"
+    height="1200"
+    loading="{{ img_loading }}"
+    fetchpriority="{{ priority }}"
+    {% if class %}class="{{ class }}"{% endif %}
+    {% if style %}style="{{ style }}"{% endif %}
+  >
+{%- else -%}
+  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+{%- endif -%}

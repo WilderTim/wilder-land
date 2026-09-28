@@ -1,0 +1,22 @@
+{%- comment -%}
+  Outputs 'open' or 'locked'. Driven by customer tags, so access is managed entirely in
+  Shopify admin (Klanten > tag toevoegen):
+  - D2C mode: always 'open'.
+  - B2B mode + "Prijzen alleen voor goedgekeurde klanten": visitors see prices only when
+    logged in AND tagged with the configured tag (default: 'zakelijk').
+  Leave the tag setting empty to show prices to every logged-in customer.
+{%- endcomment -%}
+{%- liquid
+  assign access = 'open'
+  if settings.store_mode == 'b2b' and settings.b2b_hide_prices
+    assign access = 'locked'
+    if customer
+      if settings.b2b_customer_tag == blank
+        assign access = 'open'
+      elsif customer.tags contains settings.b2b_customer_tag
+        assign access = 'open'
+      endif
+    endif
+  endif
+  echo access
+-%}

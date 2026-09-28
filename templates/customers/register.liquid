@@ -1,0 +1,24 @@
+{%- comment -%}
+  In the B2B store new accounts get the tag "aanvraag"; add the configured access tag
+  (Theme settings > Winkel, default "zakelijk") in Shopify > Klanten to approve them.
+{%- endcomment -%}
+<section class="page">
+  <h1 class="page__title h-display">{{ 'customer.register' | t }}</h1>
+  {%- form 'create_customer', class: 'form' -%}
+    <div class="form__errors">{{ form.errors | default_errors }}</div>
+    {%- if settings.store_mode == 'b2b' -%}
+      <input type="hidden" name="customer[tags]" value="aanvraag">
+      <label class="label" for="RegCompany">{{ 'customer.company' | t }}</label>
+      <input id="RegCompany" type="text" name="customer[note][Bedrijfsnaam]" autocomplete="organization" required>
+    {%- endif -%}
+    <label class="label" for="RegFirst">{{ 'customer.first_name' | t }}</label>
+    <input id="RegFirst" type="text" name="customer[first_name]" autocomplete="given-name">
+    <label class="label" for="RegLast">{{ 'customer.last_name' | t }}</label>
+    <input id="RegLast" type="text" name="customer[last_name]" autocomplete="family-name">
+    <label class="label" for="RegEmail">{{ 'customer.email' | t }}</label>
+    <input id="RegEmail" type="email" name="customer[email]" autocomplete="email" required>
+    <label class="label" for="RegPassword">{{ 'customer.password' | t }}</label>
+    <input id="RegPassword" type="password" name="customer[password]" autocomplete="new-password" required>
+    <button class="btn" type="submit">{{ 'customer.register' | t }}</button>
+  {%- endform -%}
+</section>

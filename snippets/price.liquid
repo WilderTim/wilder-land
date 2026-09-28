@@ -1,0 +1,32 @@
+{%- comment -%}
+  Price display that respects the B2B rules from Theme settings > Winkel.
+  - product (required), variant (optional, defaults to the selected/first variant)
+  - style: 'card' | 'product'
+{%- endcomment -%}
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+-%}
+{%- capture b2b_state -%}{%- render 'b2b-access' -%}{%- endcapture -%}
+{%- if b2b_state contains 'locked' -%}
+  {%- if style == 'product' -%}
+    <a class="link-bracket" href="{{ routes.account_login_url }}">{{ 'b2b.login_for_prices' | t }}</a>
+  {%- endif -%}
+{%- else -%}
+  <span data-price>
+    {%- if target.compare_at_price > target.price -%}
+      <s>{{ target.compare_at_price | money }}</s>
+    {%- endif -%}
+    {{ target.price | money }}
+  </span>
+  {%- if style == 'product' and target.unit_price_measurement -%}
+    <div class="product__tax">
+      {{ target.unit_price | money }}/{{ target.unit_price_measurement.reference_value }}{{ target.unit_price_measurement.reference_unit }}
+    </div>
+  {%- endif -%}
+  {%- if style == 'product' -%}
+    <div class="product__tax">
+      {%- if settings.store_mode == 'b2b' -%}{{ 'b2b.prices_excl_vat' | t }}{%- else -%}{{ 'products.tax_included' | t }}{%- endif -%}
+      {%- if shop.shipping_policy.body != blank %} · <a href="{{ shop.shipping_policy.url }}">{{ 'products.shipping' | t }}</a>{% endif -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}

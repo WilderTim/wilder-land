@@ -1,0 +1,22 @@
+<section class="text-marquee" style="{% if section.settings.color != blank %}color: {{ section.settings.color }};{% endif %}">
+  <div class="marquee" aria-label="{{ section.settings.text | escape }}">
+    <div class="marquee__track" style="--speed: {{ section.settings.speed }}s;" aria-hidden="true">
+      {%- for i in (1..16) -%}
+        <span class="text-marquee__item">{{ section.settings.text }}</span>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lopende tekst",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Tekst", "default": "Natural Pleasure" },
+    { "type": "color", "id": "color", "label": "Kleur", "info": "Leeg = accentkleur uit de thema-instellingen." },
+    { "type": "range", "id": "speed", "label": "Snelheid (seconden per ronde)", "min": 10, "max": 120, "step": 5, "default": 45 }
+  ],
+  "presets": [{ "name": "Lopende tekst" }]
+}
+{% endschema %}

@@ -1,0 +1,64 @@
+<footer class="site-footer">
+  <div class="site-footer__grid page-width">
+    <div>
+      <h2 class="site-footer__heading">{{ section.settings.contact_heading }}</h2>
+      <div class="site-footer__text">{{ section.settings.contact_text }}</div>
+      {%- if section.settings.show_newsletter -%}
+        {%- form 'customer', class: 'newsletter', id: 'FooterNewsletter' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="FooterEmail">{{ 'newsletter.email' | t }}</label>
+          <input id="FooterEmail" type="email" name="contact[email]" autocomplete="email" placeholder="{{ 'newsletter.email' | t }}" required>
+          <button type="submit">{{ 'newsletter.subscribe' | t }}</button>
+          {%- if form.posted_successfully? -%}<p class="site-footer__text">{{ 'newsletter.success' | t }}</p>{%- endif -%}
+        {%- endform -%}
+      {%- endif -%}
+    </div>
+    {%- for block in section.blocks -%}
+      <div {{ block.shopify_attributes }}>
+        <h2 class="site-footer__heading">{{ block.settings.heading | default: block.settings.menu.title }}</h2>
+        <ul class="site-footer__links">
+          {%- for link in block.settings.menu.links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endfor -%}
+  </div>
+  <div class="site-footer__bottom page-width">
+    {%- assign current_year = 'now' | date: '%Y' -%}
+    <p>&copy; {{ section.settings.copyright | replace: '[year]', current_year }}</p>
+    <ul>
+      {%- for link in section.settings.legal_menu.links -%}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "settings": [
+    { "type": "text", "id": "contact_heading", "label": "Contact titel", "default": "Contact" },
+    {
+      "type": "richtext", "id": "contact_text", "label": "Contact tekst",
+      "default": "<p>Mail naar:<br><a href=\"mailto:info@wilder-land.com\">info@wilder-land.com</a></p><p>Whatsapp (chat only):<br><a href=\"https://wa.me/31613284274\">+31 6 13 28 42 74</a></p><p>Seineweg 10<br>1043BG Amsterdam<br>Nederland</p>"
+    },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Toon nieuwsbrief-aanmelding", "default": false, "info": "Aanmeldingen komen in Shopify > Klanten (met e-mailmarketing toestemming)." },
+    { "type": "link_list", "id": "legal_menu", "label": "Menu onderaan", "default": "footer" },
+    { "type": "text", "id": "copyright", "label": "Copyright", "default": "Wilderland 2020-[year]. Alle rechten voorbehouden.", "info": "[year] wordt automatisch het huidige jaar." }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu-kolom",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Titel" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    }
+  ],
+  "max_blocks": 4
+}
+{% endschema %}

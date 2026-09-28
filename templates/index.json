@@ -1,0 +1,103 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "wordmark": "Wilder Land",
+        "caption_title": "Paardenbloem",
+        "caption_text": "Geplukt zomer '28.\nVinkenhorst, Herwen"
+      }
+    },
+    "products": {
+      "type": "product-row",
+      "blocks": {
+        "live": {
+          "type": "product",
+          "settings": {
+            "product": "copy-of-onkruidenthee-kombucha-75-cl",
+            "image": "shopify://shop_images/251216_WILDERLAND_Holy-Smokey-II_fles_TC.jpg",
+            "eyebrow": "Gerookte (on)kruidenthee",
+            "title": "Kombucha"
+          }
+        },
+        "demo-2": { "type": "product", "settings": { "eyebrow": "Gerookte (on)kruidenthee", "title": "Kombucha" } },
+        "demo-3": { "type": "product", "settings": { "eyebrow": "Gerookte (on)kruidenthee", "title": "Kombucha" } },
+        "demo-4": { "type": "product", "settings": { "eyebrow": "Gerookte (on)kruidenthee", "title": "Kombucha" } }
+      },
+      "block_order": ["live", "demo-2", "demo-3", "demo-4"],
+      "settings": {
+        "heading": "Shop/Collections",
+        "view_all_label": "View all",
+        "view_all_url": "shopify://collections/all",
+        "limit": 4,
+        "columns": 4,
+        "show_price": false
+      }
+    },
+    "intro": {
+      "type": "statement",
+      "settings": {
+        "text": "<p>Wilder Land maakt botanische dranken uit de Nederlandse natuur.</p><p>Natural Pleasure: wilde ingrediënten, verrassende smaken en puur genieten.</p>",
+        "link_label": "Lees meer",
+        "color_scheme": "light"
+      }
+    },
+    "split": {
+      "type": "image-split",
+      "blocks": {
+        "left": { "type": "image", "settings": { "alt": "Thé Rose fles" } },
+        "right": { "type": "image", "settings": { "alt": "Vlinder met braille" } }
+      },
+      "block_order": ["left", "right"]
+    },
+    "ingredients": {
+      "type": "ingredients",
+      "blocks": {
+        "i1": { "type": "ingredient", "settings": { "label": "Paardenbloem" } },
+        "i2": { "type": "ingredient", "settings": { "label": "Duizendblad" } },
+        "i3": { "type": "ingredient", "settings": { "label": "Vlierbessen" } },
+        "i4": { "type": "ingredient", "settings": { "label": "Guldenroede" } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"],
+      "settings": { "heading": "Onze natuurlijke ingredienten", "speed": 70 }
+    },
+    "perfect-serve": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "image_left",
+        "eyebrow": "Koude dranken",
+        "heading": "The Perfect Serve",
+        "link_label": "Lees meer"
+      }
+    },
+    "marquee": {
+      "type": "text-marquee",
+      "settings": { "text": "Natural Pleasure", "speed": 45 }
+    },
+    "trio": {
+      "type": "image-trio",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "eyebrow": "Gerookte (on)kruidenthee", "title": "Kombucha", "product": "copy-of-onkruidenthee-kombucha-75-cl" } },
+        "t2": { "type": "item", "settings": { "eyebrow": "Wild", "title": "Tote bag" } },
+        "t3": { "type": "item", "settings": { "eyebrow": "Wilderland ingredienten", "title": "Boek" } }
+      },
+      "block_order": ["t1", "t2", "t3"]
+    },
+    "collabs": {
+      "type": "collabs",
+      "blocks": {
+        "c1": { "type": "collab", "settings": { "title": "Carlijn Jacobs", "tags": "Moerasspirea\nGerookt berkenblad\nMunt" } },
+        "c2": { "type": "collab", "settings": { "title": "Elena Cremona", "tags": "Moerasspirea\nGerookt berkenblad\nMunt" } },
+        "c3": { "type": "collab", "settings": { "title": "Lea Columbo", "tags": "Moerasspirea\nGerookt berkenblad\nMunt" } },
+        "c4": { "type": "collab", "settings": { "title": "Juergen Teller", "tags": "Moerasspirea\nGerookt berkenblad\nMunt" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": { "heading": "Collabs" }
+    },
+    "natural-pleasure": {
+      "type": "big-statement",
+      "settings": { "text": "Natural Pleasure", "decorative": true }
+    }
+  },
+  "order": ["hero", "products", "intro", "split", "ingredients", "perfect-serve", "marquee", "trio", "collabs", "natural-pleasure"]
+}

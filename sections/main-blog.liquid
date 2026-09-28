@@ -1,0 +1,42 @@
+{%- paginate blog.articles by 12 -%}
+  <section class="page-width">
+    <div class="listing-head">
+      <h1 class="h-display">{{ blog.title }}</h1>
+    </div>
+    {%- if blog.all_tags.size > 0 and section.settings.show_tags -%}
+      <nav class="filters" aria-label="{{ 'blogs.tags' | t }}">
+        <a class="chip" href="{{ blog.url }}"{% unless current_tags %} aria-current="true"{% endunless %}>{{ 'collections.all' | t }}</a>
+        {%- for tag in blog.all_tags -%}
+          <a class="chip" href="{{ blog.url }}/tagged/{{ tag | handle }}"{% if current_tags contains tag %} aria-current="true"{% endif %}>{{ tag }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+    <div class="article-grid">
+      {%- for article in blog.articles -%}
+        <a class="article-card" href="{{ article.url }}">
+          <div class="media">{% render 'wl-image', image: article.image, fallback: 'wl-collab-1.jpg', sizes: '(min-width: 990px) 33vw, 100vw', alt: article.title %}</div>
+          <p class="label label--sm">{{ article.published_at | date: format: 'date' }}</p>
+          <h2 class="h-card">{{ article.title }}</h2>
+          {%- if article.excerpt != blank -%}<div class="rte">{{ article.excerpt | strip_html | truncate: 160 }}</div>{%- endif -%}
+        </a>
+      {%- else -%}
+        <p class="empty-state label">{{ 'blogs.empty' | t }}</p>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">[&larr;]</a>{%- endif -%}
+        <span>{{ paginate.current_page }} / {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}">[&rarr;]</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  </section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "div",
+  "settings": [{ "type": "checkbox", "id": "show_tags", "label": "Filter op tags", "default": true }]
+}
+{% endschema %}

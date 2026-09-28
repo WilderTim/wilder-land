@@ -1,0 +1,23 @@
+<section class="page-width">
+  <div class="listing-head"><h1 class="h-display">{{ section.settings.heading }}</h1></div>
+  <div class="product-row__grid" style="--cols: 3;">
+    {%- for collection in collections -%}
+      {%- unless collection.handle == 'frontpage' -%}
+        <a class="product-card" href="{{ collection.url }}">
+          <div class="product-card__media media">
+            {% render 'wl-image', image: collection.featured_image, fallback: 'wl-trio-1.jpg', sizes: '(min-width: 990px) 33vw, 50vw', alt: collection.title %}
+          </div>
+          <div class="product-card__info"><p class="product-card__title mono">{{ collection.title }}<br>{{ 'collections.products_count' | t: count: collection.products_count }}</p></div>
+        </a>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Alle collecties",
+  "tag": "div",
+  "settings": [{ "type": "text", "id": "heading", "label": "Titel", "default": "Shop" }]
+}
+{% endschema %}

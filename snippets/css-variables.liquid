@@ -1,0 +1,28 @@
+{%- comment -%}
+  Brand tokens. Colours are editable in the theme editor (Theme settings > Kleuren).
+  Fonts are self-hosted from /assets so no visitor data goes to Google (AVG/GDPR).
+{%- endcomment -%}
+{%- style -%}
+  @font-face { font-family: 'WL Serif'; src: url({{ 'instrument-serif-400.woff2' | asset_url }}) format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'WL Serif'; src: url({{ 'instrument-serif-400-italic.woff2' | asset_url }}) format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: 'WL Mono'; src: url({{ 'ibm-plex-mono-400.woff2' | asset_url }}) format('woff2'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'WL Mono'; src: url({{ 'ibm-plex-mono-500.woff2' | asset_url }}) format('woff2'); font-weight: 500; font-display: swap; }
+  @font-face { font-family: 'WL Sans'; src: url({{ 'ibm-plex-sans-400.woff2' | asset_url }}) format('woff2'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'WL Sans'; src: url({{ 'ibm-plex-sans-500.woff2' | asset_url }}) format('woff2'); font-weight: 500; font-display: swap; }
+
+  :root {
+    --color-bg: {{ settings.color_background }};
+    --color-text: {{ settings.color_text }};
+    --color-accent: {{ settings.color_accent }};
+    --color-dark: {{ settings.color_dark }};
+    --color-muted: {{ settings.color_muted }};
+    --color-line: {{ settings.color_text | color_modify: 'alpha', 0.14 }};
+
+    --font-serif: 'WL Serif', 'Times New Roman', serif;
+    --font-mono: 'WL Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    --font-sans: 'WL Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    --page-max: {{ settings.page_max_width }}px;
+    --gutter: clamp(12px, 1.6vw, 18px);
+  }
+{%- endstyle -%}

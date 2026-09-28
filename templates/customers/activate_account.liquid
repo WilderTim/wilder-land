@@ -1,0 +1,11 @@
+<section class="page">
+  <h1 class="page__title h-display">{{ 'customer.activate' | t }}</h1>
+  {%- form 'activate_customer_password', class: 'form' -%}
+    <div class="form__errors">{{ form.errors | default_errors }}</div>
+    <label class="label" for="ActPassword">{{ 'customer.password' | t }}</label>
+    <input id="ActPassword" type="password" name="customer[password]" autocomplete="new-password" required>
+    <label class="label" for="ActConfirm">{{ 'customer.password' | t }} (2×)</label>
+    <input id="ActConfirm" type="password" name="customer[password_confirmation]" autocomplete="new-password" required>
+    <button class="btn" type="submit">{{ 'customer.activate' | t }}</button>
+  {%- endform -%}
+</section>

@@ -1,0 +1,33 @@
+<section class="page-width">
+  <div class="listing-head"><h1 class="h-display">{{ 'search.title' | t }}</h1></div>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+    <label class="visually-hidden" for="SearchInput">{{ 'search.title' | t }}</label>
+    <input id="SearchInput" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'search.placeholder' | t }}">
+    <input type="hidden" name="options[prefix]" value="last">
+    <button class="btn" type="submit">{{ 'search.submit' | t }}</button>
+  </form>
+  {%- if search.performed -%}
+    {%- paginate search.results by 24 -%}
+      {%- if search.results_count > 0 -%}
+        <div class="product-row__grid" style="--cols: 4;">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item, show_price: true, sizes: '(min-width: 990px) 25vw, 50vw' %}
+            {%- else -%}
+              <a class="product-card" href="{{ item.url }}">
+                <div class="product-card__media media">{% render 'wl-image', image: item.image, fallback: 'wl-collab-1.jpg', sizes: '25vw' %}</div>
+                <div class="product-card__info"><p class="product-card__title mono">{{ item.title }}</p></div>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="empty-state label">{{ 'search.no_results' | t: terms: search.terms }}</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{ "name": "Zoeken", "tag": "div" }
+{% endschema %}

@@ -1,0 +1,24 @@
+{%- layout none -%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ shop.name }} — cadeaubon</title>
+    {% render 'css-variables' %}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ content_for_header }}
+  </head>
+  <body>
+    <main class="page text-center">
+      <p class="label">{{ shop.name }}</p>
+      <h1 class="h-display" style="margin:20px 0">{{ gift_card.balance | money }}</h1>
+      {%- if gift_card.enabled == false or gift_card.expired -%}<p class="label">Niet meer geldig</p>{%- endif -%}
+      <p class="label" style="margin:30px 0 10px">Code</p>
+      <p class="mono" style="font-size:22px">{{ gift_card.code | format_code }}</p>
+      {%- if gift_card.expires_on -%}<p class="label label--sm" style="margin-top:10px">Geldig tot {{ gift_card.expires_on | date: '%d-%m-%Y' }}</p>{%- endif -%}
+      <p style="margin-top:30px"><a class="btn" href="{{ shop.url }}">Naar de winkel</a></p>
+      {%- if gift_card.pass_url -%}<p style="margin-top:14px"><a class="link-bracket" href="{{ gift_card.pass_url }}">Apple Wallet</a></p>{%- endif -%}
+    </main>
+  </body>
+</html>

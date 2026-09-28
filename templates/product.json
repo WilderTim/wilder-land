@@ -1,0 +1,1 @@
+{ "sections": { "main": { "type": "main-product", "settings": { "show_dynamic_checkout": true } }, "marquee": { "type": "text-marquee", "settings": { "text": "Natural Pleasure", "speed": 45 } } }, "order": ["main", "marquee"] }

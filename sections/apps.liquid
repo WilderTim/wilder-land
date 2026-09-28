@@ -1,0 +1,19 @@
+{%- comment -%}
+  Generic container for app blocks (reviews widgets, Klaviyo sign-up forms, Instagram feeds …).
+  Add it to any page in the theme editor, then "Add block" → pick the app.
+{%- endcomment -%}
+<div class="page-width{% if section.settings.padding %} statement--compact{% endif %}">
+  {%- for block in section.blocks -%}
+    {% render block %}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Apps",
+  "tag": "section",
+  "settings": [{ "type": "checkbox", "id": "padding", "label": "Ruimte boven en onder", "default": true }],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Apps" }]
+}
+{% endschema %}

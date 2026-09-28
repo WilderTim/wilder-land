@@ -1,0 +1,11 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": { "menu": "main-menu", "logo_text": "Wilder Land", "overlay_on_home": true, "show_search": false, "show_account": false }
+    }
+  },
+  "order": ["header"]
+}

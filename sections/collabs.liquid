@@ -1,0 +1,84 @@
+{%- comment -%}
+  Collabs. Two ways to fill it:
+  1. Choose a blog (e.g. "Collabs") → the 4 newest articles are shown. The article image,
+     title and TAGS (as the ingredient list) come straight from Shopify > Blogposts.
+  2. No blog chosen → the blocks below are used.
+{%- endcomment -%}
+{%- liquid
+  assign source_blog = section.settings.blog
+  assign use_blog = false
+  if source_blog != blank and source_blog.articles_count > 0
+    assign use_blog = true
+  endif
+-%}
+<section class="collabs page-width">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="collabs__heading h-display">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+  <div class="collabs__grid">
+    {%- if use_blog -%}
+      {%- for article in source_blog.articles limit: 1 -%}
+        {% render 'collab-card', variant: 'main', title: article.title, image: article.image, tags: article.tags, url: article.url, fallback: 'wl-collab-1.jpg' %}
+      {%- endfor -%}
+      <div class="collab-list">
+        {%- for article in source_blog.articles offset: 1 limit: 3 -%}
+          {%- liquid
+            assign n = forloop.index | plus: 1
+            assign fallback = 'wl-collab-' | append: n | append: '.jpg'
+          -%}
+          {% render 'collab-card', variant: 'item', title: article.title, image: article.image, tags: article.tags, url: article.url, fallback: fallback %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      {%- for block in section.blocks limit: 1 -%}
+        {%- assign tags = block.settings.tags | newline_to_br | split: '<br />' -%}
+        {% render 'collab-card', variant: 'main', title: block.settings.title, image: block.settings.image, tags: tags, url: block.settings.link, fallback: 'wl-collab-1.jpg', block: block %}
+      {%- endfor -%}
+      <div class="collab-list">
+        {%- for block in section.blocks offset: 1 limit: 3 -%}
+          {%- liquid
+            assign tags = block.settings.tags | newline_to_br | split: '<br />'
+            assign n = forloop.index | plus: 1
+            assign fallback = 'wl-collab-' | append: n | append: '.jpg'
+          -%}
+          {% render 'collab-card', variant: 'item', title: block.settings.title, image: block.settings.image, tags: tags, url: block.settings.link, fallback: fallback, block: block %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collabs",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titel", "default": "Collabs" },
+    { "type": "blog", "id": "blog", "label": "Blog (optioneel)", "info": "Kies bijv. de blog 'Collabs'. Artikel-tags worden als ingrediëntenlijst getoond." }
+  ],
+  "blocks": [
+    {
+      "type": "collab",
+      "name": "Collab",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Afbeelding" },
+        { "type": "text", "id": "title", "label": "Naam", "default": "Carlijn Jacobs" },
+        { "type": "textarea", "id": "tags", "label": "Ingrediënten (één per regel)", "default": "Moerasspirea\nGerookt berkenblad\nMunt" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Collabs",
+      "blocks": [
+        { "type": "collab", "settings": { "title": "Carlijn Jacobs" } },
+        { "type": "collab", "settings": { "title": "Elena Cremona" } },
+        { "type": "collab", "settings": { "title": "Lea Columbo" } },
+        { "type": "collab", "settings": { "title": "Juergen Teller" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

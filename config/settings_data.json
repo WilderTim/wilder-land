@@ -1,0 +1,27 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "store_mode": "d2c",
+      "b2b_hide_prices": true,
+      "b2b_customer_tag": "zakelijk",
+      "color_background": "#FFFFFF",
+      "color_text": "#000000",
+      "color_accent": "#04A151",
+      "color_dark": "#120203",
+      "color_muted": "#6B6B6B",
+      "page_max_width": 1800
+    },
+    "Zakelijk": {
+      "store_mode": "b2b",
+      "b2b_hide_prices": true,
+      "b2b_customer_tag": "zakelijk",
+      "color_background": "#FFFFFF",
+      "color_text": "#000000",
+      "color_accent": "#04A151",
+      "color_dark": "#120203",
+      "color_muted": "#6B6B6B",
+      "page_max_width": 1800
+    }
+  }
+}

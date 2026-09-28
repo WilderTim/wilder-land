@@ -1,0 +1,22 @@
+<section class="big-statement" style="{% if section.settings.background != blank %}background: {{ section.settings.background }};{% endif %}">
+  <div class="big-statement__inner page-width">
+    <div class="big-statement__media">
+      {% render 'wl-image', image: section.settings.image, fallback: 'wl-bubbles.jpg', sizes: '(min-width: 750px) 66vw, 80vw' %}
+    </div>
+    <p class="big-statement__text" aria-hidden="{% if section.settings.decorative %}true{% else %}false{% endif %}">{{ section.settings.text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Grote slogan",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Afbeelding" },
+    { "type": "text", "id": "text", "label": "Tekst", "default": "Natural Pleasure" },
+    { "type": "color", "id": "background", "label": "Achtergrond", "info": "Leeg = donkere kleur uit de thema-instellingen." },
+    { "type": "checkbox", "id": "decorative", "label": "Alleen decoratief (verbergen voor schermlezers)", "default": true }
+  ],
+  "presets": [{ "name": "Grote slogan" }]
+}
+{% endschema %}

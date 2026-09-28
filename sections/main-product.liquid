@@ -1,0 +1,161 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  capture b2b_state
+    render 'b2b-access'
+  endcapture
+  assign locked = false
+  if b2b_state contains 'locked'
+    assign locked = true
+  endif
+  assign eyebrow = product.metafields.custom.subtitle.value | default: product.type
+-%}
+<section class="product page-width">
+  <div class="product__gallery">
+    {%- for media in product.media -%}
+      <div class="media" data-media-id="{{ media.id }}">
+        {%- if media.media_type == 'image' -%}
+          {%- if forloop.first -%}{%- assign media_loading = 'eager' -%}{%- else -%}{%- assign media_loading = 'lazy' -%}{%- endif -%}
+          {% render 'wl-image', image: media, sizes: '(min-width: 990px) 55vw, 100vw', loading: media_loading, alt: product.title %}
+        {%- else -%}
+          {{ media | media_tag: image_size: '1200x' }}
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <div class="media">{% render 'wl-image', fallback: 'wl-product-1.jpg' %}</div>
+    {%- endfor -%}
+  </div>
+
+  <div class="product__info"
+    data-product-form
+    data-product-handle="{{ product.handle }}"
+    data-money-format="{{ shop.money_format | escape }}"
+    {{ section.shopify_attributes }}
+  >
+    {%- if eyebrow != blank -%}<p class="product__eyebrow label">{{ eyebrow }}</p>{%- endif -%}
+    <h1 class="product__title h-display">{{ product.title }}</h1>
+    <div class="product__price">{% render 'price', product: product, variant: current_variant, style: 'product' %}</div>
+
+    {%- if locked -%}
+      <div class="gate">
+        <p class="label">{{ 'b2b.gate_title' | t }}</p>
+        <p class="rte">{{ 'b2b.gate_text' | t }}</p>
+        <div class="product-form__row">
+          <a class="btn" href="{{ routes.account_login_url }}">{{ 'header.login' | t }}</a>
+          <a class="btn btn--outline" href="{{ routes.account_register_url }}">{{ 'b2b.apply' | t }}</a>
+        </div>
+      </div>
+    {%- else -%}
+      {%- form 'product', product, class: 'product-form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <fieldset data-option-index="{{ forloop.index0 }}">
+              <legend class="label">{{ option.name }}</legend>
+              <div class="option-list">
+                {%- for value in option.values -%}
+                  {%- assign input_id = section.id | append: '-' | append: forloop.parentloop.index | append: '-' | append: forloop.index -%}
+                  <input type="radio" id="{{ input_id }}" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" data-option{% if option.selected_value == value %} checked{% endif %}>
+                  <label for="{{ input_id }}">{{ value }}</label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        {%- liquid
+          assign qty_min = current_variant.quantity_rule.min | default: 1
+          assign qty_step = current_variant.quantity_rule.increment | default: 1
+        -%}
+        <div class="product-form__row">
+          <div class="qty">
+            <button type="button" data-qty="-1" aria-label="{{ 'products.decrease' | t }}">−</button>
+            <label class="visually-hidden" for="Quantity-{{ section.id }}">{{ 'products.quantity' | t }}</label>
+            <input id="Quantity-{{ section.id }}" type="number" name="quantity" value="{{ qty_min }}" min="{{ qty_min }}" step="{{ qty_step }}">
+            <button type="button" data-qty="1" aria-label="{{ 'products.increase' | t }}">+</button>
+          </div>
+          <button type="submit" name="add" class="btn" data-add-to-cart
+            data-add="{{ 'products.add_to_cart' | t }}"
+            data-sold-out="{{ 'products.sold_out' | t }}"
+            data-unavailable="{{ 'products.unavailable' | t }}"
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            <span>{%- if current_variant.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}</span>
+          </button>
+        </div>
+        {%- if section.settings.show_dynamic_checkout -%}
+          {{ form | payment_button }}
+        {%- endif -%}
+      {%- endform -%}
+    {%- endif -%}
+
+    <div class="product__description rte">{{ product.description }}</div>
+
+    {%- if product.metafields.custom.ingredients != blank -%}
+      <div class="product__meta">
+        <p class="label">{{ 'products.ingredients' | t }}</p>
+        <div class="rte">{{ product.metafields.custom.ingredients | metafield_tag }}</div>
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} App blocks (e.g. reviews, subscriptions) added in the theme editor {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}{% render block %}{%- endif -%}
+    {%- endfor -%}
+
+    <script type="application/json" data-product-json>
+      {
+        "id": {{ product.id | json }},
+        "handle": {{ product.handle | json }},
+        "variants": [
+          {%- for v in product.variants -%}
+            {
+              "id": {{ v.id | json }},
+              "title": {{ v.title | json }},
+              "options": {{ v.options | json }},
+              "price": {{ v.price | json }},
+              "compare_at_price": {{ v.compare_at_price | default: 0 | json }},
+              "available": {{ v.available | json }},
+              "featured_media": {% if v.featured_media %}{ "id": {{ v.featured_media.id | json }} }{% else %}null{% endif %}
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+  </div>
+</section>
+
+{%- comment -%} Structured data for Google (price, availability, brand) {%- endcomment -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "description": {{ product.description | strip_html | truncate: 500 | json }},
+    "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+    {%- if product.featured_image -%}"image": {{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }},{%- endif -%}
+    "offers": [
+      {%- for v in product.variants -%}
+        {
+          "@type": "Offer",
+          "sku": {{ v.sku | json }},
+          "price": {{ v.price | divided_by: 100.0 | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}",
+          "url": {{ request.origin | append: v.url | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "div",
+  "blocks": [{ "type": "@app" }],
+  "settings": [
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Toon 'Direct kopen' knoppen (iDEAL, Apple Pay …)", "default": true }
+  ]
+}
+{% endschema %}

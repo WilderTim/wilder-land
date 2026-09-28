@@ -1,0 +1,15 @@
+<section class="page">
+  <h1 class="page__title h-display">{{ 'customer.order' | t }} {{ order.name }}</h1>
+  <p class="label text-center">{{ order.created_at | date: '%d-%m-%Y' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</p>
+  <table class="cart-table" style="margin-top:40px">
+    <tbody>
+      {%- for line_item in order.line_items -%}
+        <tr><td>{{ line_item.title }} × {{ line_item.quantity }}</td><td style="text-align:right" class="mono">{{ line_item.final_line_price | money }}</td></tr>
+      {%- endfor -%}
+      <tr><td class="label">{{ 'cart.subtotal' | t }}</td><td style="text-align:right" class="mono">{{ order.line_items_subtotal_price | money }}</td></tr>
+      {%- for shipping_method in order.shipping_methods -%}<tr><td class="label">{{ shipping_method.title }}</td><td style="text-align:right" class="mono">{{ shipping_method.price | money }}</td></tr>{%- endfor -%}
+      <tr><td class="label">{{ 'cart.total' | t }}</td><td style="text-align:right" class="mono">{{ order.total_price | money }}</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:40px"><a class="link-bracket" href="{{ routes.account_url }}">{{ 'customer.account' | t }}</a></p>
+</section>

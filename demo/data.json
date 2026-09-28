@@ -1,0 +1,91 @@
+{
+  "_comment": "Demo data for the static Vercel preview. The product below is a read-only snapshot of the live Shopify product; on the demo site its price, cart and checkout are fetched live from Shopify (see demo/storefront.js).",
+  "store": {
+    "domain": "wilder-land-b2b.myshopify.com",
+    "checkoutHost": "zakelijk.wilder-land.com",
+    "apiVersion": "2025-07",
+    "country": "NL",
+    "language": "NL"
+  },
+  "shop": {
+    "name": "Wilder Land",
+    "description": "Wilder Land maakt botanische dranken uit de Nederlandse natuur.",
+    "money_format": "€{{amount_with_comma_separator}}",
+    "customer_accounts_enabled": false
+  },
+  "shopImages": {
+    "251216_WILDERLAND_Holy-Smokey-II_fles_TC.jpg": { "src": "//cdn.shopify.com/s/files/1/0633/9208/8313/files/251216_WILDERLAND_Holy-Smokey-II_fles_TC.jpg?v=1768558700", "width": 1484, "height": 2191 }
+  },
+  "products": [
+    {
+      "id": 7878499139833,
+      "title": "Holy Smokey Part II - 75CL",
+      "handle": "copy-of-onkruidenthee-kombucha-75-cl",
+      "vendor": "Wilder Land",
+      "type": "",
+      "tags": [],
+      "subtitle": "Gerookte (on)kruidenthee kombucha",
+      "description": "<p>Gerookte (on)kruidenthee kombucha</p>",
+      "options": [{ "name": "Smaak", "values": ["Holy Smokey Part II (6 x 75CL)"] }],
+      "variants": [
+        { "id": 43667692159225, "title": "Holy Smokey Part II (6 x 75CL)", "sku": "854", "price": 4740, "compare_at_price": null, "available": true, "options": ["Holy Smokey Part II (6 x 75CL)"] }
+      ],
+      "media": [
+        { "id": 68190506746186, "src": "//cdn.shopify.com/s/files/1/0633/9208/8313/files/251216_WILDERLAND_Holy-Smokey-II_fles_TC.jpg?v=1768558700", "width": 1484, "height": 2191 },
+        { "id": 68190506778954, "src": "//cdn.shopify.com/s/files/1/0633/9208/8313/files/250110_WILDERLAND_Packs_CAN_Holy_Smokes_met_glas_web_795c9dfb-b03d-4004-981a-e322508201cf.jpg?v=1768558700", "width": 1649, "height": 1745 },
+        { "id": 68190506713418, "src": "//cdn.shopify.com/s/files/1/0633/9208/8313/files/251216_WILDERLAND_Holy-Smokey-II_glas_TC.jpg?v=1768559989", "width": 1730, "height": 2269 },
+        { "id": 47228643606858, "src": "//cdn.shopify.com/s/files/1/0633/9208/8313/files/WilderLand-11.jpg?v=1768558700", "width": 2000, "height": 3000 }
+      ]
+    }
+  ],
+  "menus": {
+    "main-menu": { "title": "Hoofdmenu", "links": [
+      { "title": "Shop", "url": "/collections/all" },
+      { "title": "Cadeaus", "url": "/collections/all" },
+      { "title": "Over", "url": "/pages/over-ons" },
+      { "title": "Verkooppunten", "url": "/pages/verkooppunten" },
+      { "title": "Zakelijk", "url": "https://zakelijk.wilder-land.com" }
+    ] },
+    "ontdek": { "title": "Ontdek", "links": [
+      { "title": "Alle producten", "url": "/collections/all" },
+      { "title": "Proeverijkrat", "url": "/collections/all" },
+      { "title": "Thee", "url": "/collections/all" },
+      { "title": "Koude dranken", "url": "/collections/all" },
+      { "title": "Eten", "url": "/collections/all" },
+      { "title": "Cadeaus", "url": "/collections/all" },
+      { "title": "Merch & accessoires", "url": "/collections/all" },
+      { "title": "Verkooppunten", "url": "/pages/verkooppunten" }
+    ] },
+    "klantenservice": { "title": "Klantenservice", "links": [
+      { "title": "Veelgestelde vragen", "url": "/pages/over-ons" },
+      { "title": "Service voorwaarden", "url": "/pages/over-ons" }
+    ] },
+    "meer-over-wilder-land": { "title": "Meer over Wilder Land", "links": [
+      { "title": "Over ons", "url": "/pages/over-ons" },
+      { "title": "Werken bij", "url": "/pages/over-ons" },
+      { "title": "Rabbit hole", "url": "/blogs/collabs" },
+      { "title": "Nieuwsbrief", "url": "/pages/over-ons" },
+      { "title": "Word ambassadeur", "url": "/pages/over-ons" },
+      { "title": "Zakelijk", "url": "https://zakelijk.wilder-land.com" }
+    ] },
+    "footer-bottom": { "title": "Footer Bottom", "links": [
+      { "title": "Algemene voorwaarden", "url": "/pages/over-ons" },
+      { "title": "Disclaimer", "url": "/pages/over-ons" },
+      { "title": "Privacy policy", "url": "/pages/over-ons" }
+    ] }
+  },
+  "pages": [
+    { "handle": "over-ons", "title": "Over Wilder Land", "content": "<p>Wilder Land maakt botanische dranken uit de Nederlandse natuur. We werken met wilde planten en ‘(on)kruiden’ die we samen met boeren, natuurbeheerders en plukkers oogsten — van paardenbloem tot duizendblad en vlierbes.</p><p>Natural Pleasure: wilde ingrediënten, verrassende smaken en puur genieten.</p><p><em>Demo-pagina: in Shopify beheer je deze tekst via Online Store &gt; Pagina’s.</em></p>" },
+    { "handle": "verkooppunten", "title": "Verkooppunten", "content": "<p>Hier komt de lijst (of kaart) met verkooppunten. In Shopify kan dit een gewone pagina zijn, of een metaobject ‘Verkooppunt’ zodat het team locaties zelf kan toevoegen.</p>" }
+  ],
+  "blog": {
+    "handle": "collabs",
+    "title": "Collabs",
+    "articles": [
+      { "handle": "carlijn-jacobs", "title": "Carlijn Jacobs", "image": "wl-collab-1.jpg", "tags": ["Moerasspirea", "Gerookt berkenblad", "Munt"], "published_at": "2026-09-01", "author": "Wilder Land", "excerpt": "Fotograaf Carlijn Jacobs over wilde smaken, kleur en de natuur als studio.", "content": "<p>Demo-artikel. In Shopify schrijf je dit onder Online Store &gt; Blogposts. De <strong>tags</strong> van het artikel (hier: moerasspirea, gerookt berkenblad, munt) verschijnen automatisch als ingrediëntenlijst in de Collabs-sectie op de homepage.</p><h2>Wilde smaken</h2><p>Serveer Wilder Land goed koud, met veel ijs en een botanische garnish die past bij de smaak. Schenk royaal, neem de tijd en geniet.</p>" },
+      { "handle": "elena-cremona", "title": "Elena Cremona", "image": "wl-collab-2.jpg", "tags": ["Moerasspirea", "Gerookt berkenblad", "Munt"], "published_at": "2026-08-12", "author": "Wilder Land", "excerpt": "Een bos wilde bloemen en een gesprek over seizoenen.", "content": "<p>Demo-artikel.</p>" },
+      { "handle": "lea-columbo", "title": "Lea Columbo", "image": "wl-collab-3.jpg", "tags": ["Moerasspirea", "Gerookt berkenblad", "Munt"], "published_at": "2026-07-20", "author": "Wilder Land", "excerpt": "Illustraties van tulpen, vlierbloesem en zomerse velden.", "content": "<p>Demo-artikel.</p>" },
+      { "handle": "juergen-teller", "title": "Juergen Teller", "image": "wl-collab-4.jpg", "tags": ["Moerasspirea", "Gerookt berkenblad", "Munt"], "published_at": "2026-06-30", "author": "Wilder Land", "excerpt": "Over bijen, honing en het wilde land.", "content": "<p>Demo-artikel.</p>" }
+    ]
+  }
+}

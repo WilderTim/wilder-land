@@ -1,0 +1,46 @@
+{%- comment -%}
+  Product card used in product rows, collections and search.
+  - product:  product object (optional — without it the card renders the demo fallback)
+  - image:    optional image override (image_picker)
+  - fallback: asset used when there is neither an override nor a product image
+  - eyebrow / title: optional text overrides
+  - show_price: boolean
+  - sizes: sizes attribute
+
+  Line 1 of the label comes from the product metafield custom.subtitle
+  (e.g. "Gerookte (on)kruidenthee"), falling back to the product type.
+  Product tags that start with "label:" become a badge, e.g. "label:Nieuw".
+{%- endcomment -%}
+{%- liquid
+  assign card_image = image | default: product.featured_media
+  assign line_1 = eyebrow | default: product.metafields.custom.subtitle.value | default: product.type
+  assign line_2 = title | default: product.title
+  assign card_url = product.url | default: url | default: '#'
+  assign badge = ''
+  for tag in product.tags
+    if tag contains 'label:'
+      assign badge = tag | remove_first: 'label:' | strip
+      break
+    endif
+  endfor
+  if product and product.available == false
+    assign badge = 'products.sold_out' | t
+  endif
+-%}
+<a class="product-card" href="{{ card_url }}"{% if block %} {{ block.shopify_attributes }}{% endif %}>
+  <div class="product-card__media media">
+    {% render 'wl-image', image: card_image, fallback: fallback, sizes: sizes, alt: line_2 %}
+  </div>
+  {%- if badge != blank -%}
+    <span class="product-card__badge chip">{{ badge }}</span>
+  {%- endif -%}
+  <div class="product-card__info">
+    <p class="product-card__title mono">
+      {%- if line_1 != blank -%}{{ line_1 }}<br>{%- endif -%}
+      {{ line_2 }}
+    </p>
+    {%- if show_price and product -%}
+      <span class="product-card__price">{% render 'price', product: product, style: 'card' %}</span>
+    {%- endif -%}
+  </div>
+</a>

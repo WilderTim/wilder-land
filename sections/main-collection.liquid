@@ -1,0 +1,60 @@
+{%- comment -%}
+  Collection page. Filters come from Shopify's Search & Discovery app (free) — add a
+  "Tag" filter there and product tags become clickable filters here, no code needed.
+{%- endcomment -%}
+{%- paginate collection.products by section.settings.per_page -%}
+  <section class="page-width">
+    <div class="listing-head">
+      <h1 class="h-display">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
+    </div>
+
+    {%- if section.settings.show_filters -%}
+      {%- for filter in collection.filters -%}
+        {%- if filter.type == 'list' -%}
+          <nav class="filters" aria-label="{{ filter.label | escape }}">
+            {%- if filter.active_values.size > 0 -%}
+              <a class="chip" href="{{ filter.url_to_remove }}">{{ 'collections.all' | t }}</a>
+            {%- endif -%}
+            {%- for value in filter.values -%}
+              {%- if value.count > 0 or value.active -%}
+                <a class="chip" href="{% if value.active %}{{ value.url_to_remove }}{% else %}{{ value.url_to_add }}{% endif %}"{% if value.active %} aria-current="true"{% endif %}>{{ value.label }}</a>
+              {%- endif -%}
+            {%- endfor -%}
+          </nav>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if collection.products.size > 0 -%}
+      <div class="product-row__grid" style="--cols: {{ section.settings.columns }};">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product, show_price: section.settings.show_price, sizes: '(min-width: 990px) 25vw, 50vw' %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p class="empty-state label">{{ 'collections.empty' | t }}</p>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" aria-label="{{ 'general.pagination' | t }}">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">[&larr;]</a>{%- endif -%}
+        <span>{{ paginate.current_page }} / {{ paginate.pages }}</span>
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}">[&rarr;]</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  </section>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collectie",
+  "tag": "div",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Producten per pagina", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "range", "id": "columns", "label": "Kolommen (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_filters", "label": "Toon filters", "default": true },
+    { "type": "checkbox", "id": "show_price", "label": "Toon prijs", "default": true }
+  ]
+}
+{% endschema %}

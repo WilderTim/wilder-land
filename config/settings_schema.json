@@ -1,0 +1,43 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Wilder Land",
+    "theme_version": "0.1.0",
+    "theme_author": "Wilder Land",
+    "theme_documentation_url": "https://github.com/WilderTim/wilder-land",
+    "theme_support_url": "https://github.com/WilderTim/wilder-land"
+  },
+  {
+    "name": "Winkel",
+    "settings": [
+      {
+        "type": "select", "id": "store_mode", "label": "Type winkel", "default": "d2c",
+        "options": [
+          { "value": "d2c", "label": "Consument (wilder-land.com)" },
+          { "value": "b2b", "label": "Zakelijk (zakelijk.wilder-land.com)" }
+        ],
+        "info": "Dezelfde thema-code draait op beide winkels; deze instelling bepaalt het gedrag."
+      },
+      { "type": "header", "content": "Zakelijk" },
+      { "type": "checkbox", "id": "b2b_hide_prices", "label": "Prijzen alleen voor goedgekeurde klanten", "default": true, "info": "Alleen actief bij Type winkel = Zakelijk." },
+      { "type": "text", "id": "b2b_customer_tag", "label": "Klant-tag voor toegang", "default": "zakelijk", "info": "Geef een klant deze tag in Shopify > Klanten om prijzen te tonen en te laten bestellen." }
+    ]
+  },
+  {
+    "name": "Kleuren",
+    "settings": [
+      { "type": "color", "id": "color_background", "label": "Achtergrond", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_text", "label": "Tekst", "default": "#000000" },
+      { "type": "color", "id": "color_accent", "label": "Accent (groen)", "default": "#04A151" },
+      { "type": "color", "id": "color_dark", "label": "Donker (footer)", "default": "#120203" },
+      { "type": "color", "id": "color_muted", "label": "Subtiel", "default": "#6B6B6B" }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_max_width", "label": "Maximale paginabreedte", "min": 1100, "max": 2400, "step": 50, "unit": "px", "default": 1800 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  }
+]

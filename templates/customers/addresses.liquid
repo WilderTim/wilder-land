@@ -1,0 +1,25 @@
+<section class="page">
+  <h1 class="page__title h-display">{{ 'customer.addresses' | t }}</h1>
+  {%- paginate customer.addresses by 10 -%}
+    {%- for address in customer.addresses -%}
+      <div style="padding:20px 0;border-bottom:1px solid var(--color-line)">
+        {{ address | format_address }}
+        {%- if address == customer.default_address -%}<p class="label label--sm">Standaard</p>{%- endif -%}
+      </div>
+    {%- endfor -%}
+  {%- endpaginate -%}
+  <h2 class="h-card" style="margin:40px 0 16px">Nieuw adres</h2>
+  {%- form 'customer_address', customer.new_address, class: 'form' -%}
+    <div class="form__errors">{{ form.errors | default_errors }}</div>
+    <input type="text" name="address[company]" placeholder="{{ 'customer.company' | t }}" autocomplete="organization">
+    <input type="text" name="address[first_name]" placeholder="{{ 'customer.first_name' | t }}" autocomplete="given-name">
+    <input type="text" name="address[last_name]" placeholder="{{ 'customer.last_name' | t }}" autocomplete="family-name">
+    <input type="text" name="address[address1]" placeholder="Adres" autocomplete="address-line1">
+    <input type="text" name="address[zip]" placeholder="Postcode" autocomplete="postal-code">
+    <input type="text" name="address[city]" placeholder="Plaats" autocomplete="address-level2">
+    <input type="hidden" name="address[country]" value="Netherlands">
+    <label><input type="checkbox" name="address[default]" value="1"> Standaardadres</label>
+    <button class="btn" type="submit">Opslaan</button>
+  {%- endform -%}
+  <p style="margin-top:40px"><a class="link-bracket" href="{{ routes.account_url }}">{{ 'customer.account' | t }}</a></p>
+</section>

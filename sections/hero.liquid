@@ -1,0 +1,38 @@
+{%- liquid
+  assign focal = '50% 50%'
+  if section.settings.image.presentation.focal_point
+    assign focal = section.settings.image.presentation.focal_point
+  endif
+-%}
+<section class="hero" style="--focal: {{ focal }};">
+  <div class="hero__media">
+    {% render 'wl-image', image: section.settings.image, fallback: 'wl-hero.jpg', sizes: '100vw', loading: 'eager', alt: section.settings.caption_title %}
+  </div>
+  <div class="hero__inner page-width">
+    {%- if section.settings.caption_title != blank or section.settings.caption_text != blank -%}
+      <div class="hero__caption">
+        <p class="hero__caption-title">{{ section.settings.caption_title }}</p>
+        <div>{{ section.settings.caption_text | newline_to_br }}</div>
+      </div>
+    {%- endif -%}
+    {%- if section.settings.wordmark != blank -%}
+      {%- if template.name == 'index' -%}<h1 class="hero__wordmark">{{ section.settings.wordmark }}</h1>
+      {%- else -%}<p class="hero__wordmark">{{ section.settings.wordmark }}</p>{%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "div",
+  "class": "section-hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Afbeelding", "info": "Stel het focuspunt in via de afbeelding. Minimaal 2400px breed." },
+    { "type": "text", "id": "wordmark", "label": "Grote titel", "default": "Wilder Land" },
+    { "type": "text", "id": "caption_title", "label": "Bijschrift titel", "default": "Paardenbloem" },
+    { "type": "textarea", "id": "caption_text", "label": "Bijschrift tekst", "default": "Geplukt zomer '28.\nVinkenhorst, Herwen" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

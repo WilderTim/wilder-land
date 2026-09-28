@@ -1,0 +1,101 @@
+{
+  "general": {
+    "page": "Pagina {{ page }}",
+    "read_more": "Read more",
+    "not_found": "Deze pagina bestaat niet (meer).",
+    "home": "Terug naar home",
+    "pagination": "Paginering",
+    "password_title": "Binnenkort open",
+    "password_enter": "Toegang met wachtwoord",
+    "password_label": "Password",
+    "password_submit": "Naar binnen"
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  },
+  "header": {
+    "menu": "Main menu",
+    "cart": "Cart",
+    "search": "Search",
+    "account": "Account",
+    "login": "Log in"
+  },
+  "products": {
+    "add_to_cart": "Add to cart",
+    "sold_out": "Sold out",
+    "unavailable": "Unavailable",
+    "quantity": "Quantity",
+    "increase": "More",
+    "decrease": "Less",
+    "tax_included": "Including VAT",
+    "shipping": "shipping",
+    "ingredients": "Ingredients"
+  },
+  "b2b": {
+    "login_for_prices": "Log in for prices",
+    "prices_excl_vat": "Prices excluding VAT",
+    "gate_title": "Trade prices",
+    "gate_text": "Prijzen en bestellen zijn beschikbaar voor goedgekeurde zakelijke klanten. Log in of vraag een account aan.",
+    "apply": "Apply for an account"
+  },
+  "collections": {
+    "all": "All",
+    "empty": "Er zijn (nog) geen producten in deze collectie.",
+    "products_count": "{{ count }} producten"
+  },
+  "cart": {
+    "title": "Cart",
+    "view": "View cart",
+    "added": "added",
+    "error": "Er ging iets mis. Probeer het opnieuw.",
+    "product": "Product",
+    "total": "Total",
+    "remove": "Remove",
+    "note": "Opmerking bij je bestelling",
+    "subtotal": "Subtotal",
+    "taxes_shipping": "Verzendkosten en kortingscodes vul je in bij het afrekenen.",
+    "checkout": "Checkout",
+    "update": "Bijwerken",
+    "empty": "Your cart is empty.",
+    "continue": "Continue shopping"
+  },
+  "blogs": {
+    "tags": "Onderwerpen",
+    "empty": "Nog geen artikelen.",
+    "back": "Terug naar overzicht"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Waar ben je naar op zoek?",
+    "submit": "Zoek",
+    "no_results": "Geen resultaten voor “{{ terms }}”."
+  },
+  "newsletter": {
+    "email": "Email",
+    "subscribe": "Subscribe",
+    "success": "Bedankt voor je aanmelding!"
+  },
+  "customer": {
+    "login": "Log in",
+    "email": "Email",
+    "password": "Password",
+    "forgot": "Wachtwoord vergeten?",
+    "register": "Account aanmaken",
+    "first_name": "Voornaam",
+    "last_name": "Achternaam",
+    "company": "Bedrijfsnaam",
+    "reset": "Wachtwoord herstellen",
+    "reset_sent": "We hebben je een e-mail gestuurd om je wachtwoord te herstellen.",
+    "new_password": "Nieuw wachtwoord",
+    "account": "My account",
+    "orders": "Orders",
+    "no_orders": "Je hebt nog geen bestellingen geplaatst.",
+    "order": "Bestelling",
+    "date": "Datum",
+    "status": "Status",
+    "logout": "Log out",
+    "addresses": "Adressen",
+    "activate": "Account activeren",
+    "pending_approval": "Je account wacht op goedkeuring. Je ontvangt bericht zodra je prijzen kunt zien."
+  }
+}

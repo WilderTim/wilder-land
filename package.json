@@ -1,0 +1,16 @@
+{
+  "name": "wilder-land-theme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Wilder Land Shopify theme (D2C + zakelijk) with a static Vercel demo build",
+  "type": "module",
+  "scripts": {
+    "build:demo": "node scripts/build-demo.mjs",
+    "check": "shopify theme check",
+    "dev": "shopify theme dev --store wilder-land-b2b.myshopify.com"
+  },
+  "devDependencies": {
+    "liquidjs": "^10.29.0"
+  },
+  "engines": { "node": ">=20" }
+}

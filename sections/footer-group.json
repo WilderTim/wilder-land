@@ -1,0 +1,22 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "ontdek": { "type": "menu", "settings": { "heading": "Ontdek", "menu": "ontdek" } },
+        "service": { "type": "menu", "settings": { "heading": "Klantenservice", "menu": "klantenservice" } },
+        "meer": { "type": "menu", "settings": { "heading": "Meer over Wilder Land", "menu": "meer-over-wilder-land" } }
+      },
+      "block_order": ["ontdek", "service", "meer"],
+      "settings": {
+        "contact_heading": "Contact",
+        "legal_menu": "footer-bottom",
+        "copyright": "Wilderland 2020-[year]. Alle rechten voorbehouden.",
+        "show_newsletter": false
+      }
+    }
+  },
+  "order": ["footer"]
+}

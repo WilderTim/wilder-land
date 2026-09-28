@@ -1,0 +1,31 @@
+<article class="article">
+  <header class="article__head">
+    <p class="label">{{ blog.title }} · {{ article.published_at | date: format: 'date' }}</p>
+    <h1 class="h-display">{{ article.title }}</h1>
+    {%- if article.tags.size > 0 -%}
+      <div class="article__tags">
+        {%- for tag in article.tags -%}<a class="chip" href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{%- endfor -%}
+      </div>
+    {%- endif -%}
+  </header>
+  {%- if article.image -%}
+    <div class="article__image media">{% render 'wl-image', image: article.image, sizes: '(min-width: 840px) 840px, 100vw', loading: 'eager', alt: article.title %}</div>
+  {%- endif -%}
+  <div class="rte">{{ article.content }}</div>
+  <p class="text-center" style="margin-top:60px"><a class="link-bracket" href="{{ blog.url }}">{{ 'blogs.back' | t }}</a></p>
+</article>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": {{ article.title | json }},
+    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+    "author": { "@type": "Person", "name": {{ article.author | json }} },
+    "publisher": { "@type": "Organization", "name": {{ shop.name | json }} }
+  }
+</script>
+
+{% schema %}
+{ "name": "Artikel", "tag": "div" }
+{% endschema %}

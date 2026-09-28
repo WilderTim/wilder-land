@@ -1,0 +1,81 @@
+{%- comment -%}
+  Product row ("SHOP/COLLECTIONS").
+  Source A: pick a collection → shows its first N products (collections can be automated
+            on product tags in Shopify admin, e.g. "tag is bestseller").
+  Source B: no collection → one card per block; each block picks a product.
+            Blocks without a product show the Figma demo image (not clickable).
+{%- endcomment -%}
+{%- liquid
+  assign collection_source = section.settings.collection
+  assign cols = section.settings.columns
+  assign sizes = '(min-width: 990px) calc(100vw / ' | append: cols | append: '), 50vw'
+  assign view_all = section.settings.view_all_url | default: collection_source.url | default: routes.all_products_collection_url
+-%}
+<section class="product-row page-width">
+  <div class="product-row__bar">
+    <h2 class="label">{{ section.settings.heading }}</h2>
+    {%- if section.settings.view_all_label != blank -%}
+      <a class="link-bracket" href="{{ view_all }}">{{ section.settings.view_all_label }}</a>
+    {%- endif -%}
+  </div>
+  <div class="product-row__grid" style="--cols: {{ cols }};">
+    {%- if collection_source != blank and collection_source.products_count > 0 -%}
+      {%- for product in collection_source.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product, show_price: section.settings.show_price, sizes: sizes %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign fallback = 'wl-product-' | append: forloop.index | append: '.jpg'
+          if forloop.index > 4
+            assign fallback = 'wl-product-1.jpg'
+          endif
+        -%}
+        {% render 'product-card',
+          product: block.settings.product,
+          image: block.settings.image,
+          eyebrow: block.settings.eyebrow,
+          title: block.settings.title,
+          fallback: fallback,
+          show_price: section.settings.show_price,
+          sizes: sizes,
+          block: block
+        %}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Productrij",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titel", "default": "Shop/Collections" },
+    { "type": "text", "id": "view_all_label", "label": "Link-tekst", "default": "View all" },
+    { "type": "url", "id": "view_all_url", "label": "Link" },
+    { "type": "collection", "id": "collection", "label": "Collectie", "info": "Laat leeg om producten per blok te kiezen." },
+    { "type": "range", "id": "limit", "label": "Aantal producten (collectie)", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns", "label": "Kolommen (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_price", "label": "Toon prijs", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "image_picker", "id": "image", "label": "Afbeelding (optioneel)", "info": "Overschrijft de productfoto." },
+        { "type": "text", "id": "eyebrow", "label": "Regel 1 (optioneel)", "info": "Standaard: metafield custom.subtitle of producttype." },
+        { "type": "text", "id": "title", "label": "Regel 2 (optioneel)", "info": "Standaard: producttitel." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Productrij",
+      "blocks": [{ "type": "product" }, { "type": "product" }, { "type": "product" }, { "type": "product" }]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,38 @@
+{%- comment -%}
+  - variant: 'main' (large, caption below) | 'item' (small, text beside the image)
+  - title, image, tags (array), url, fallback, block
+{%- endcomment -%}
+{%- assign link = url | default: '#' -%}
+{%- if variant == 'main' -%}
+  <article class="collab-main"{% if block %} {{ block.shopify_attributes }}{% endif %}>
+    <a href="{{ link }}" class="media" tabindex="-1" aria-hidden="true">
+      {% render 'wl-image', image: image, fallback: fallback, sizes: '(min-width: 750px) 50vw, 100vw', alt: title %}
+    </a>
+    <div class="collab-main__meta">
+      <a href="{{ link }}" style="text-decoration:none"><h3 class="h-card">{{ title }}</h3></a>
+      <div class="collab-main__tags">
+        {%- for tag in tags -%}
+          {%- assign t = tag | strip -%}
+          {%- if t != blank -%}{{ t }}{% if forloop.index == 1 and forloop.length > 2 %}, {% elsif forloop.last == false %}<br>{% endif %}{%- endif -%}
+        {%- endfor -%}
+        <a class="link-bracket" href="{{ link }}">{{ 'general.read_more' | t }}</a>
+      </div>
+    </div>
+  </article>
+{%- else -%}
+  <a class="collab-item" href="{{ link }}"{% if block %} {{ block.shopify_attributes }}{% endif %}>
+    <div class="media">
+      {% render 'wl-image', image: image, fallback: fallback, sizes: '(min-width: 750px) 200px, 42vw', alt: title %}
+    </div>
+    <div class="collab-item__body">
+      <h3 class="h-card">{{ title }}</h3>
+      <ul class="collab-item__tags" role="list">
+        {%- for tag in tags -%}
+          {%- assign t = tag | strip -%}
+          {%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}
+        {%- endfor -%}
+      </ul>
+      <span class="link-bracket">{{ 'general.read_more' | t }}</span>
+    </div>
+  </a>
+{%- endif -%}
